@@ -2,10 +2,11 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  useParams,
 } from "react-router-dom";
-import Home from "./Home";
-import Navigation from "./Navigation";
+import Home from "./pages/Home";
+import Navigation from "./components/Navigation";
+import Profile from "./pages/Profile";
+import User from "./components/User"
 
 export default function App() {
   return (
@@ -31,20 +32,4 @@ function Users() {
       </Routes>
     </div>
   );
-}
-
-function Profile() {
-  return (<div>
-    <h2>Profile</h2>
-  </div>);
-}
-
-
-function User() {
-  const params = useParams();
-  return (
-  <div>
-    <h2>User ID: {params.userId}</h2>
-    
-  </div>);
 }
