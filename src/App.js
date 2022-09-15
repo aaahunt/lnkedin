@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useParams,
+} from "react-router-dom";
+import Home from "./Home";
+import Navigation from "./Navigation";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <BrowserRouter>
+      <Navigation />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="users/*" element={<Users />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function Users() {
+  return (
+    <div>
+      <h2>Users</h2>
+      <form><input type="text" /></form>
+      <Routes>
+        <Route path=":userId" element={<User />} />
+      </Routes>
     </div>
   );
 }
 
-export default App;
+function Profile() {
+  return (<div>
+    <h2>Profile</h2>
+  </div>);
+}
+
+
+function User() {
+  const params = useParams();
+  return (
+  <div>
+    <h2>User ID: {params.userId}</h2>
+    
+  </div>);
+}
