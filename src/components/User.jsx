@@ -1,6 +1,3 @@
-import { useParams } from "react-router-dom";
-
-export default function User() {
-  const params = useParams();
-  return <h2>User ID: {params.userId}</h2>;
+export default function User(props) {
+  return <h2>User ID: {props.search}</h2>;
 }

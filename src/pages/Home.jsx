@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Home() {
   const [data, setData] = useState("");
 
-  if (data.length === 0) {
+  useEffect(() => {
+
     fetch("https://pokeapi.co/api/v2/pokemon/ditto")
       .then((response) => response.json())
       .then((data) => {
         setData(data);
         console.log(data);
       });
-  }
+
+  }, [])
 
   return (
     <div>

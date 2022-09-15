@@ -6,7 +6,7 @@ import {
 import Home from "./pages/Home";
 import Navigation from "./components/Navigation";
 import Profile from "./pages/Profile";
-import User from "./components/User"
+import Users from "./pages/Users";
 
 export default function App() {
   return (
@@ -22,14 +22,3 @@ export default function App() {
   );
 }
 
-function Users() {
-  return (
-    <div>
-      <h2>Users</h2>
-      <form><input type="text" /></form>
-      <Routes>
-        <Route path=":userId" element={<User />} />
-      </Routes>
-    </div>
-  );
-}
