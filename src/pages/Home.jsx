@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+const app = initializeApp(firebaseConfig);
+
 export default function Home() {
   const [data, setData] = useState([]);
 
