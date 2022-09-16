@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from "react";
 
 export default function Home() {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-
-    fetch("https://pokeapi.co/api/v2/pokemon/ditto")
+    fetch("http://localhost:4000/users")
       .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        console.log(data);
+      .then((jsonData) => {
+        setData(jsonData);
       });
-
-  }, [])
+  }, []);
 
   return (
     <div>
-      {data && (
-        <h2>
-          Height of {data.name} is {data.height}
-        </h2>
-      )}
+      {data.map((item) => (
+        <div key={item.PersonID}>
+          <h1>Name: {item.FirstName} {item.LastName}</h1>
+          <h3>{item.City}</h3>
+        </div>
+      ))}
     </div>
   );
 }
