@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from "react";
-
-//const app = initializeApp(firebaseConfig);
+import { db } from "../config";
+import {collection, addDoc} from 'firebase/firestore'
 
 export default function Home() {
   const [data, setData] = useState([]);
 
+
+  const handleSubmit = async () => {
+    try {
+      await addDoc(collection(db, 'users'), {
+        firstName: "Testerman",
+        lastName: "description",
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
+
+    handleSubmit();
+
     fetch("http://localhost:4000/users")
       .then((response) => response.json())
       .then((jsonData) => {
