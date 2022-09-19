@@ -6,6 +6,10 @@ Winging it since 2020
 
 Runs the app locally. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+To run locally you will need to create a .env file in the root of the repository and add the record:
+
+APIKEY: "[THE API KEY HERE](https://console.firebase.google.com/project/yellow-94486/hosting/sites)"
+
 The page will reload when you make changes.
 You may also see any lint errors in the console.
 
