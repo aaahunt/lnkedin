@@ -8,8 +8,8 @@
 
 # Firebase
 **/.firebase
-.env
 /firebase-debug.log
+.env
 
 # production
 /build
