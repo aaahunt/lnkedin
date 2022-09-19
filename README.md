@@ -1,4 +1,4 @@
-# LNnked
+# Yellow Team
 
 Winging it since 2020
 

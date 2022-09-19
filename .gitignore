@@ -6,6 +6,10 @@
 # testing
 /coverage
 
+# Firebase
+/src/firebase/api-details.js
+.firebase
+
 # production
 /build
 
