@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getData, getAll, addData } from "../firebase/functions";
+import { getData, getAll } from "../firebase/functions";
 
 export default function Home() {
   const [data, setData] = useState([]);
