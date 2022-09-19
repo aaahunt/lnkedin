@@ -9,6 +9,7 @@ export default function Navigation() {
       <Link to="/">Home</Link>
       <Link to="/users">Users</Link>
       {showProfilePage && <Link to="/profile">My Profile</Link>}
+      <Link to="/about">About</Link>
     </nav>
   );
 }
