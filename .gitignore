@@ -7,7 +7,7 @@
 /coverage
 
 # Firebase
-/src/firebase/api-details.js
+/src/firebase/firebaseConfig.js
 **/.firebase
 
 # production
