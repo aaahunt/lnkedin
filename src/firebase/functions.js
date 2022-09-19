@@ -1,14 +1,11 @@
 import { db } from "../firebase/init";
 import {
   collection,
-  addDoc,
   doc,
   getDoc,
   setDoc,
   getDocs,
   query,
-  where,
-  deleteDoc,
 } from "firebase/firestore";
 
 // Find documentation for firebase functions here: https://firebase.google.com/docs/firestore/quickstart

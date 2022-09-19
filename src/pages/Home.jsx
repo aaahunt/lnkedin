@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { getData, getAll } from "../firebase/functions";
 
 export default function Home() {
@@ -9,6 +9,7 @@ export default function Home() {
     <div>
       <button onClick={() => getData()}>Get Data</button>
       <button onClick={() => getAll()}>Get All</button>
+      <button onClick={() => setData("Something")}>Meh</button>
       
       {data.map((item) => (
         <div key={item.PersonID}>
