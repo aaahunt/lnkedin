@@ -13,6 +13,7 @@ import {
 
 // Find documentation for firebase functions here: https://firebase.google.com/docs/firestore/quickstart
 
+// https://firebase.google.com/docs/firestore/manage-data/add-data
 export const addData = async (data) => {
   try {
     await setDoc(doc(db, "users", data.firstName + data.lastName), data);

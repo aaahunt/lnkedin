@@ -8,7 +8,7 @@
 
 # Firebase
 /src/firebase/api-details.js
-.firebase
+**/.firebase
 
 # production
 /build
