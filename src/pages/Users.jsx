@@ -1,44 +1,40 @@
 import { useState } from "react";
-import User from "../components/User";
-import NewUser from "./NewUser";
+import React from "react";
 import { getAll } from "../firebase/functions";
+import { filterUser } from "../firebase/functions";
 
 export default function Users() {
-  const [search, setSearch] = useState("");
-  const [showNewUser, setshowNewUser] = useState();
   const [data, setData] = useState([]);
+  let textInput = React.createRef();
 
   const getAllUsers = async () => {
     let results = await getAll();
     setData(results);
   };
 
-  function searchName(event) {
+  const searchName = async (event) => {
     event.preventDefault(); // Stops page refresh
 
-    let searchValue = event.target.elements.search.value;
-    setSearch(searchValue);
-    console.log(searchValue);
+
+    let returnValue = await filterUser(textInput.current.value);
+    console.log("returnValue", returnValue)
+    setData(returnValue)
+    console.log(data)
+
   }
+  
 
   return (
     <div>
       <h2>Users</h2>
-      <button onClick={() => setshowNewUser(!showNewUser)}>
-        {!showNewUser ? <div> Add new user </div> : <div> Close </div>}
-      </button>
-      {showNewUser ? (
-        <NewUser />
-      ) : (
-        <form onSubmit={searchName}>
-          <input type="text" placeholder="Search name" name="search" />
-          <input type="submit" value="Search" />
-        </form>
-      )}
-      {search && <User search={search} />}
+      
 
-      <button onClick={getAllUsers}>Get All</button>
-      {data.map((item) => (
+        <form>
+          <input type="text" placeholder="Search name" name="search" ref={textInput}/>
+        </form>
+      
+
+        {data.map((item) => (
         <div key={item.id}>
           <h1>
             {item.firstName} {item.lastName}
@@ -50,6 +46,7 @@ export default function Users() {
           )}
         </div>
       ))}
+
     </div>
   );
 }

@@ -80,6 +80,7 @@ export const getAll = async () => {
 
 export const checkLogin = async (email, pass) => {
   const q = query(collection(db, "users"));
+  if(exceededQuota())  return `too many calls!`;
   const results = await getDocs(q);
   callCounter++;
 
@@ -102,6 +103,21 @@ export const checkLogin = async (email, pass) => {
 
   return returnValue;
 };
+
+export const filterUser = async (data) =>{
+  console.log("search: ", data)
+  const q = query(collection(db, "users"), where("officeLocation", "==", data));
+  if(exceededQuota())  return `too many calls!`;
+  const querySnapshot = await getDocs(q);
+  callCounter++;
+
+  let users = []
+
+  querySnapshot.forEach((doc) => {
+    users.push(doc.data())
+  });  
+  return users;
+}
 
 function exceededQuota(){
   console.log("call counter: " + callCounter)
