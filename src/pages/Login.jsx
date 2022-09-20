@@ -31,7 +31,7 @@ function Login() {
     if (userData) {
         console.log("userData", userData)
         setIsSubmitted(true);
-        setCookie("user", userData.username, 3)
+        setCookie("user", userData.id, 3)
     } else {
       // Username not found
       setErrorMessages({ name: "email", message: errors.email });
