@@ -64,3 +64,31 @@ export const getAll = async () => {
   });
   return users;
 };
+
+
+export const checkLogin = async (uname, pass) => {
+  const q = query(collection(db, "users"));
+  const results = await getDocs(q);
+
+  let returnValue = false;
+
+  results.forEach((user) => {
+
+    let dbUser = user.data().username;
+    let dbPass = user.data().password;
+
+    if(uname === dbUser){
+      if(pass === dbPass){
+        returnValue = user.data();
+      } else{
+        console.log("pass is not the same", pass, dbPass)
+      }
+    } else{
+      return
+    }
+
+  });
+
+  return returnValue;
+
+};
