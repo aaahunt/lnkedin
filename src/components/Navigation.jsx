@@ -1,8 +1,7 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Navigation() {
-  let showProfilePage = /users|profile/.test(useLocation().pathname);
 
   return (
     <nav className="navbar background">
@@ -14,14 +13,9 @@ export default function Navigation() {
         <li>
           <Link to="/users">Users</Link>
         </li>
-        {showProfilePage && (
           <li>
             <Link to="/profile">My Profile</Link>
           </li>
-        )}
-        <li>
-          <Link to="/about">About</Link>
-        </li>
       </ul>
       <div className="rightNav">
         <input type="text" name="search" id="search" />
