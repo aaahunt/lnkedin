@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function Navigation() {
-
   return (
     <nav className="navbar background">
       <ul className="nav-list">
@@ -13,11 +12,9 @@ export default function Navigation() {
         <li>
           <Link to="/users">Users</Link>
         </li>
-        {showProfilePage && (
-          <li>
-            <Link to="/profile">My Profile</Link>
-          </li>
-        )}
+        <li>
+          <Link to="/profile">My Profile</Link>
+        </li>
         <li>
           <Link to="/about">About</Link>
         </li>
