@@ -65,9 +65,14 @@ function Login() {
           <label>Password </label>
           <input type="password" name="pass" required />
         </div>
+        <div className="underline">
+        <li><a href="/Home">Forgot password?</a></li>
+        </div>
         <div className="button-container">
           <input value="Login" type="submit" />
+          <br></br>
         </div>
+        <li><a href="/Register">Don't have an account? Sign up</a></li>
       </form>
     </div>
   );
@@ -80,7 +85,6 @@ function Login() {
         {isSubmitted ? <div><p>User has been successfully signed in.</p>
         <li><a href="/Home">Click me to continue to the homepage!</a></li></div> : renderForm}
       </div>
-      <a href="/Register">Register</a>
     </div>
   );
 }

@@ -29,8 +29,7 @@ export default function About() {
   return (
     <div>
       <h1>Add User</h1>
-      
-      <form onSubmit={submitUser}>
+      <form onSubmit={submitUser} id="registration">
         <input type="email" name="email" placeholder="you@mail.com" required />
         <input
           type="password"
