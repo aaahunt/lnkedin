@@ -5,9 +5,9 @@ import EditProfile from "../components/EditProfile";
 function Profile() {
   return (
     <div>
-      <div class="box-main">
-        <div class="firstHalf">
-          <h1 class="text-big">My Profile</h1>
+      <div className="box-main">
+        <div className="firstHalf">
+          <h1 className="text-big">My Profile</h1>
           <UploadImages />
           <EditProfile />
         </div>

@@ -19,7 +19,7 @@ export const addUser = async (data) => {
     if (await userExists(data)) {
       return `Error: User with email ${data.email} already exists`;
     } else {
-      if(exceededQuota())  return `too many calls!`;
+      if (exceededQuota()) return `too many calls!`;
       await setDoc(doc(db, "users", data.email), data);
       callCounter++;
       return `User with email ${data.email} created`;
@@ -34,7 +34,7 @@ export const userExists = async (data) => {
   try {
     const citiesRef = collection(db, "users");
     const q = query(citiesRef, where("email", "==", data.email));
-    if(exceededQuota())  return `too many calls!`;
+    if (exceededQuota()) return `too many calls!`;
     const querySnapshot = await getDocs(q);
     callCounter++;
 
@@ -53,7 +53,7 @@ export const userExists = async (data) => {
 
 export const getData = async (userID) => {
   const docRef = doc(db, "users", userID);
-  if(exceededQuota())  return `too many calls!`;
+  if (exceededQuota()) return `too many calls!`;
   const docSnap = await getDoc(docRef);
   callCounter++;
 
@@ -66,7 +66,7 @@ export const getData = async (userID) => {
 
 export const getAll = async () => {
   const q = query(collection(db, "users"));
-  if(exceededQuota())  return `too many calls!`;
+  if (exceededQuota()) return `too many calls!`;
   const results = await getDocs(q);
   callCounter++;
 
@@ -80,7 +80,7 @@ export const getAll = async () => {
 
 export const checkLogin = async (email, pass) => {
   const q = query(collection(db, "users"));
-  if(exceededQuota())  return `too many calls!`;
+  if (exceededQuota()) return `too many calls!`;
   const results = await getDocs(q);
   callCounter++;
 
@@ -104,22 +104,35 @@ export const checkLogin = async (email, pass) => {
   return returnValue;
 };
 
-export const filterUser = async (data) =>{
-  console.log("search: ", data)
-  const q = query(collection(db, "users"), where("officeLocation", "==", data));
-  if(exceededQuota())  return `too many calls!`;
+export const filterUser = async (search) => {
+  
+  const q = query(collection(db, "users"));
+  if (exceededQuota()) return "too many calls!";
   const querySnapshot = await getDocs(q);
   callCounter++;
 
-  let users = []
+  let users = [];
 
   querySnapshot.forEach((doc) => {
-    users.push(doc.data())
-  });  
+    if (!search){
+      users.push({...doc.data(), id: doc.id});
+    } else {
+      let user = doc.data();
+      Object.keys(user).every((item) => {
+        if (user[item].toLowerCase().includes(search.toLowerCase())) {
+          users.push({...doc.data(), id: doc.id});
+          return false;
+        } else{
+          return true;
+        }
+      });
+    }
+    
+  });
   return users;
-}
+};
 
-function exceededQuota(){
-  console.log("call counter: " + callCounter)
-  return callCounter > 1000
+function exceededQuota() {
+  console.log("call counter: " + callCounter);
+  return callCounter > 1000;
 }
