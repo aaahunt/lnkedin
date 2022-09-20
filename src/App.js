@@ -3,8 +3,8 @@ import Home from "./pages/Home";
 import Navigation from "./components/Navigation";
 import Profile from "./pages/Profile";
 import Users from "./pages/Users";
-import About from "./pages/About";
 import Login from "./pages/Login";
+import Register from "./pages/Register"
 
 export default function App() {
 
@@ -34,10 +34,10 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={isLoggedin() ? <Home /> : <Login />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="home" element={<Home />} />
         <Route path="profile" element={<Profile />} />
         <Route path="users" element={<Users />} />
-        <Route path="about" element={<About />} />
+        <Route path="register" element={<Register   />} />
       </Routes>
     </BrowserRouter>
   );
