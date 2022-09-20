@@ -8,23 +8,23 @@ function Login() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const errors = {
-    uname: "Invalid username or password",
-    pass: "Invalid username or password"
+    email: "Invalid email or password",
+    pass: "Invalid email or password"
   };
 
   const handleSubmit = async (event) => {
     //Prevent page reload
     event.preventDefault();
 
-    let uname = event.target.elements.uname.value;
+    let email = event.target.elements.email.value;
     let pass = event.target.elements.pass.value;
 
 
-    console.log("uname", uname)
+    console.log("email", email)
 
     // Find user login info
-    // const userData = database.find((user) => user.username === uname.value);
-    const userData = await checkLogin(uname, pass)
+    // const userData = database.find((user) => user.username === email.value);
+    const userData = await checkLogin(email, pass)
     
 
     // Compare user info
@@ -34,7 +34,7 @@ function Login() {
         setCookie("user", userData.username, 3)
     } else {
       // Username not found
-      setErrorMessages({ name: "uname", message: errors.uname });
+      setErrorMessages({ name: "email", message: errors.email });
     }
   };
 
@@ -55,18 +55,18 @@ function Login() {
   const renderForm = (
     <div className="form">
       <form onSubmit={handleSubmit}>
-        {renderErrorMessage("uname")}
+        {renderErrorMessage("email")}
         {renderErrorMessage("pass")}  
         <div className="input-container">
-          <label>Username </label>
-          <input type="text" name="uname" required />
+          <label>Email </label>
+          <input type="text" name="email" required />
         </div>
         <div className="input-container">
           <label>Password </label>
           <input type="password" name="pass" required />
         </div>
         <div className="button-container">
-          <input type="submit" />
+          <input value="Login" type="submit" />
         </div>
       </form>
     </div>
@@ -75,7 +75,7 @@ function Login() {
   return (
     <div className="app">
       <div className="login-form">
-        <div className="title">Sign In</div>
+        <div className="title">Login</div>
         
         {isSubmitted ? <div><p>User has been successfully signed in.</p>
         <li><a href="/Home">Click me to continue to the homepage!</a></li></div> : renderForm}

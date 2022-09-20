@@ -67,17 +67,17 @@ export const getAll = async () => {
   return users;
 };
 
-export const checkLogin = async (uname, pass) => {
+export const checkLogin = async (email, pass) => {
   const q = query(collection(db, "users"));
   const results = await getDocs(q);
 
   let returnValue = false;
 
   results.forEach((user) => {
-    let dbUser = user.data().username;
+    let dbEmail = user.data().email;
     let dbPass = user.data().password;
 
-    if (uname === dbUser) {
+    if (email === dbEmail) {
       if (pass === dbPass) {
         returnValue = user.data();
       } else {
