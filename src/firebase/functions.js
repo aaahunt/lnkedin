@@ -9,19 +9,24 @@ import {
   where,
 } from "firebase/firestore";
 
+let callCounter = 0;
+
 // Find documentation for firebase functions here: https://firebase.google.com/docs/firestore/quickstart
 
 // https://firebase.google.com/docs/firestore/manage-data/add-data
 export const addUser = async (data) => {
   try {
     if (await userExists(data)) {
-      console.log(`Error: User with email ${data.email} already exists`);
+      return `Error: User with email ${data.email} already exists`;
     } else {
+      if(exceededQuota())  return `too many calls!`;
       await setDoc(doc(db, "users", data.email), data);
-      console.log("User created");
+      callCounter++;
+      return `User with email ${data.email} created`;
     }
   } catch (err) {
     console.log(err);
+    return err;
   }
 };
 
@@ -29,7 +34,9 @@ export const userExists = async (data) => {
   try {
     const citiesRef = collection(db, "users");
     const q = query(citiesRef, where("email", "==", data.email));
+    if(exceededQuota())  return `too many calls!`;
     const querySnapshot = await getDocs(q);
+    callCounter++;
 
     let found = false;
 
@@ -46,7 +53,9 @@ export const userExists = async (data) => {
 
 export const getData = async (userID) => {
   const docRef = doc(db, "users", userID);
+  if(exceededQuota())  return `too many calls!`;
   const docSnap = await getDoc(docRef);
+  callCounter++;
 
   if (docSnap.exists()) {
     console.log("Document data:", docSnap.data());
@@ -57,7 +66,9 @@ export const getData = async (userID) => {
 
 export const getAll = async () => {
   const q = query(collection(db, "users"));
+  if(exceededQuota())  return `too many calls!`;
   const results = await getDocs(q);
+  callCounter++;
 
   let users = [];
   results.forEach((user) => {
@@ -70,6 +81,7 @@ export const getAll = async () => {
 export const checkLogin = async (email, pass) => {
   const q = query(collection(db, "users"));
   const results = await getDocs(q);
+  callCounter++;
 
   let returnValue = false;
 
@@ -90,3 +102,8 @@ export const checkLogin = async (email, pass) => {
 
   return returnValue;
 };
+
+function exceededQuota(){
+  console.log("call counter: " + callCounter)
+  return callCounter > 1000
+}

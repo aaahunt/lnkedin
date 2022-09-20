@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { addUser } from "../firebase/functions";
 
 export default function About() {
-  function submitUser(event) {
+  const [msg, setMsg] = useState();
+
+  const submitUser = async (event) => {
     event.preventDefault(); // Stops page refresh
 
     let data = {
@@ -18,7 +21,9 @@ export default function About() {
       bio: event.target.elements.bio.value,
       linkedin: event.target.elements.linkedin.value,
     };
-    addUser(data);
+    let response = await addUser(data);
+    setMsg(response);
+    console.log("msg", msg)
   }
 
   return (
@@ -79,6 +84,7 @@ export default function About() {
 
         <input type="submit" value="Add user" />
       </form>
+      {msg && <p>{msg}</p>}
     </div>
   );
 }
