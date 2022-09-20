@@ -92,7 +92,7 @@ export const checkLogin = async (email, pass) => {
 
     if (email === dbEmail) {
       if (pass === dbPass) {
-        returnValue = user.data();
+        returnValue = {...user.data(), id: user.id};
       } else {
         console.log("pass is not the same", pass, dbPass);
       }
