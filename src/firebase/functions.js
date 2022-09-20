@@ -15,11 +15,9 @@ import {
 export const addUser = async (data) => {
   try {
     if (await userExists(data)) {
-      console.log(
-        `Error: User ${data.firstName} ${data.lastName}  already exists`
-      );
+      console.log(`Error: User with email ${data.email} already exists`);
     } else {
-      await setDoc(doc(db, "users", data.firstName + data.lastName), data);
+      await setDoc(doc(db, "users", data.email), data);
       console.log("User created");
     }
   } catch (err) {
@@ -29,13 +27,17 @@ export const addUser = async (data) => {
 
 export const userExists = async (data) => {
   try {
-    const q = query(
-      collection(db, "users"),
-      where("firstName", "==", data.firstName),
-      where("lastName", "==", data.lastName)
-    );
+    const citiesRef = collection(db, "users");
+    const q = query(citiesRef, where("email", "==", data.email));
     const querySnapshot = await getDocs(q);
-    return !querySnapshot.empty;
+
+    let found = false;
+
+    querySnapshot.forEach((doc) => {
+      if (doc.data().email === data.email) found = true;
+    });
+
+    return found;
   } catch (error) {
     console.log(error);
     return true;
@@ -59,12 +61,11 @@ export const getAll = async () => {
 
   let users = [];
   results.forEach((user) => {
-    let data =  {...user.data(), id: user.id}
+    let data = { ...user.data(), id: user.id };
     users.push(data);
   });
   return users;
 };
-
 
 export const checkLogin = async (uname, pass) => {
   const q = query(collection(db, "users"));
@@ -73,22 +74,19 @@ export const checkLogin = async (uname, pass) => {
   let returnValue = false;
 
   results.forEach((user) => {
-
     let dbUser = user.data().username;
     let dbPass = user.data().password;
 
-    if(uname === dbUser){
-      if(pass === dbPass){
+    if (uname === dbUser) {
+      if (pass === dbPass) {
         returnValue = user.data();
-      } else{
-        console.log("pass is not the same", pass, dbPass)
+      } else {
+        console.log("pass is not the same", pass, dbPass);
       }
-    } else{
-      return
+    } else {
+      return;
     }
-
   });
 
   return returnValue;
-
 };

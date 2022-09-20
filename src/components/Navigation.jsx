@@ -14,13 +14,8 @@ export default function Navigation() {
         <li>
           <Link to="/users">Users</Link>
         </li>
-        {showProfilePage && (
-          <li>
-            <Link to="/profile">My Profile</Link>
-          </li>
-        )}
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/profile">My Profile</Link>
         </li>
       </ul>
       <div className="rightNav">
