@@ -27,8 +27,10 @@ export default function About() {
   }
 
   return (
+  <div className="registrationapp">
+  <div className="login-form-registration">
+    <div className="title">Add User</div>
     <div>
-      <h1>Add User</h1>
       <form onSubmit={submitUser} id="registration">
         <input type="email" name="email" placeholder="you@mail.com" required />
         <input
@@ -46,7 +48,7 @@ export default function About() {
           <option value="Nottingham">Nottingham</option>
           <option value="Leeds">Leeds</option>
           <option value="Cardiff">Cardiff</option>
-          <option value="Southhampton">Southhampton</option>
+          <option value="Southampton">Southampton</option>
         </select>
         <select name="role">
           <option value="UX">UX</option>
@@ -86,5 +88,7 @@ export default function About() {
       </form>
       {msg && <p>{msg}</p>}
     </div>
+    </div>
+</div>
   );
 }
