@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { addUser } from "../firebase/functions";
+const CryptoJS = require("crypto-js");
 
 export default function About() {
   const [msg, setMsg] = useState();
@@ -7,9 +8,13 @@ export default function About() {
   const submitUser = async (event) => {
     event.preventDefault(); // Stops page refresh
 
+    let password = event.target.elements.password.value
+
+    var encryptedPass = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(password), "AIzaSyC4QmDmwTtyi0WQoLB").toString();
+
     let data = {
       email: event.target.elements.email.value,
-      password: event.target.elements.password.value,
+      password: encryptedPass,
       firstName: event.target.elements.firstName.value,
       lastName: event.target.elements.lastName.value,
       officeLocation: event.target.elements.officeLocation.value,

@@ -8,6 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+const CryptoJS = require("crypto-js");
 
 let callCounter = 0;
 
@@ -79,6 +80,7 @@ export const getAll = async () => {
 };
 
 export const checkLogin = async (email, pass) => {
+
   const q = query(collection(db, "users"));
   if (exceededQuota()) return `too many calls!`;
   const results = await getDocs(q);
@@ -89,12 +91,17 @@ export const checkLogin = async (email, pass) => {
   results.forEach((user) => {
     let dbEmail = user.data().email;
     let dbPass = user.data().password;
+    console.log(dbPass)
+    if(!dbPass) return;
+    // Decrpyt password
+    var bytes = CryptoJS.AES.decrypt(dbPass, 'AIzaSyC4QmDmwTtyi0WQoLB');
+    var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
 
     if (email === dbEmail) {
-      if (pass === dbPass) {
+      if (pass === decryptedPassword) {
         returnValue = {...user.data(), id: user.id};
       } else {
-        console.log("pass is not the same", pass, dbPass);
+        console.log("pass is not the same", pass, decryptedPassword);
       }
     } else {
       return;

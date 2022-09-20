@@ -19,13 +19,8 @@ function Login() {
     let email = event.target.elements.email.value;
     let pass = event.target.elements.pass.value;
 
-
-    console.log("email", email)
-
     // Find user login info
-    // const userData = database.find((user) => user.username === email.value);
     const userData = await checkLogin(email, pass)
-    
 
     // Compare user info
     if (userData) {
