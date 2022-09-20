@@ -1,53 +1,40 @@
 import { useState } from "react";
-import User from "../components/User";
-import NewUser from "./NewUser";
-import { getAll } from "../firebase/functions";
+import React from "react";
+import { filterUser } from "../firebase/functions";
 
 export default function Users() {
-  const [search, setSearch] = useState("");
-  const [showNewUser, setshowNewUser] = useState();
   const [data, setData] = useState([]);
 
-  const getAllUsers = async () => {
-    let results = await getAll();
-    setData(results);
+  const handleChange = async (e) => {
+    let search = e ? e.target.value : ""
+
+    let returnValue = await filterUser(search);
+    if (!returnValue) {
+      console.log("No search criteria was given");
+      return;
+    }
+
+    setData(returnValue);
   };
-
-  function searchName(event) {
-    event.preventDefault(); // Stops page refresh
-
-    let searchValue = event.target.elements.search.value;
-    setSearch(searchValue);
-    console.log(searchValue);
-  }
 
   return (
     <div>
       <h2>Users</h2>
-      <button onClick={() => setshowNewUser(!showNewUser)}>
-        {!showNewUser ? <div> Add new user </div> : <div> Close </div>}
-      </button>
-      {showNewUser ? (
-        <NewUser />
-      ) : (
-        <form onSubmit={searchName}>
-          <input type="text" placeholder="Search name" name="search" />
-          <input type="submit" value="Search" />
-        </form>
-      )}
-      {search && <User search={search} />}
 
-      <button onClick={getAllUsers}>Get All</button>
+      <form>
+        <input
+          type="text"
+          placeholder="Search name"
+          name="search"
+          onChange={handleChange}
+        />
+      </form>
       {data.map((item) => (
         <div key={item.id}>
           <h1>
             {item.firstName} {item.lastName}
           </h1>
-          {item.homeLocation && (
-            <h3>
-              Office: {item.officeLocation}, Home: {item.homeLocation}
-            </h3>
-          )}
+          <p>{item.officeLocation}</p>
         </div>
       ))}
     </div>
