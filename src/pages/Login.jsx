@@ -76,9 +76,11 @@ function Login() {
     <div className="app">
       <div className="login-form">
         <div className="title">Sign In</div>
+        
         {isSubmitted ? <div><p>User has been successfully signed in.</p>
         <li><a href="/Home">Click me to continue to the homepage!</a></li></div> : renderForm}
       </div>
+      <a href="/Register">Register</a>
     </div>
   );
 }
