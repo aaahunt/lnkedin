@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/index.css"
 import { checkLogin } from "../firebase/functions";
+import { setCookie } from "../functions/cookies";
 
 function Login() {
   // React States
@@ -32,13 +33,6 @@ function Login() {
       setErrorMessages({ name: "email", message: errors.email });
     }
   };
-
-  function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    let expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
 
   // Generate JSX code for error message
   const renderErrorMessage = (name) =>

@@ -27,8 +27,8 @@ export default function About() {
       linkedin: event.target.elements.linkedin.value,
     };
     let response = await addUser(data);
-    setMsg(response);
-    console.log("msg", msg)
+    setMsg(response, console.log("msg", msg));
+    
   }
 
   return (

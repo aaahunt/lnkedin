@@ -59,7 +59,9 @@ export const getData = async (userID) => {
   callCounter++;
 
   if (docSnap.exists()) {
-    console.log("Document data:", docSnap.data());
+    let userInfo = docSnap.data()
+    delete userInfo.password;
+    return userInfo
   } else {
     console.log("No such document!");
   }

@@ -1,82 +1,85 @@
-import React, { useState } from "react"
-import "../css/index.css"
+import React, { useState, useEffect } from "react";
+import { getData } from "../firebase/functions";
+import { getCookie } from "../functions/cookies";
+import "../css/index.css";
 
 function EditProfile() {
-    const [state, setState] = useState({
-        fname: "",
-        scheme: "Tech",
-        bio: "",
-      })
-    
-      const handleChange = e => {
-        setState({
-          ...state,
-          [e.target.name]: e.target.value,
-        })
-      }
+  const [state, setState] = useState();
 
-
-
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSubmit = (event) => {
-    //Prevent page reload
-    event.preventDefault();
-    setIsSubmitted(true);
-  }
-
-  const renderForm = (
-    <div className="profileform">
-      <form onSubmit={handleSubmit}>
-          <label> Name: </label>
-          <input 
-          type="text" 
-          name="fname" 
-          value={state.fname} 
-          onChange={handleChange} />
-          <br /><br />
-      <label>
-        Scheme:
-        <select
-          name="scheme"
-          value={state.scheme}
-          onChange={handleChange}
-        >
-          <option value="Tech">Tech</option>
-          <option value="UX">UX</option>
-          <option value="Product">Product</option>
-          <option value="Data Science">Data Science</option>
-        </select>
-      </label>
-      <br /><br />
-      <label>
-        Bio:{" "}
-        <textarea
-          name="bio"
-          value={state.bio}
-          onChange={handleChange}
-        />
-      </label>
-        <div className="button-container">
-          <input value="Edit" type="submit" />
-        </div>
-      </form>
-    </div>
-  );
+  useEffect(() => {
+    getData(getCookie("user")).then((result) => {
+      setState(result);
+    });
+  }, []);
 
   return (
     <div className="formtext">
-        {isSubmitted ?
-            <div>
-                <h4>Name: {state.fname} </h4>
-                <br></br>
-                <h4>Scheme: {state.scheme} </h4>
-                <br></br>
-                <h4>Bio: {state.bio}</h4>
-                </div> : renderForm}
+      {state && (
+        <div>
+          <form id="registration">
+            <input type="email" name="email" defaultValue={state.email} disabled />
+
+            <input
+              type="text"
+              name="firstName"
+              defaultValue={state.firstName}
+              required
+            />
+            <input
+              type="text"
+              name="lastName"
+              defaultValue={state.lastName}
+              required
+            />
+
+            <select name="officeLocation">
+              <option value="Bishopsgate">Bishopsgate</option>
+              <option value="Sutton">Sutton</option>
+              <option value="Nottingham">Nottingham</option>
+              <option value="Leeds">Leeds</option>
+              <option value="Cardiff">Cardiff</option>
+              <option value="Southhampton">Southhampton</option>
+            </select>
+            <select name="role">
+              <option value="UX">UX</option>
+              <option value="Tech">Tech</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Product">Product</option>
+            </select>
+            <input
+              type="text"
+              name="hobbies"
+              defaultValue={state.hobbies}
+            />
+            <input
+              type="text"
+              name="currentSkills"
+              defaultValue={state.currentSkills}
+            />
+            <input type="text" name="degree" defaultValue={state.degree} />
+            <input
+              type="text"
+              name="desiredSkills"
+              defaultValue={state.desiredSkills}
+            />
+            <textarea
+              rows="4"
+              name="bio"
+              defaultValue={state.bio}
+            />
+
+            <input
+              type="text"
+              name="linkedin"
+              defaultValue={state.linkedin}
+            />
+
+            <input type="submit" value="Update Profile" />
+          </form>
+        </div>
+      )}
     </div>
   );
 }
 
-export default EditProfile
+export default EditProfile;

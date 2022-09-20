@@ -3,6 +3,7 @@ import UploadImages from "../components/UploadImages";
 import EditProfile from "../components/EditProfile";
 
 function Profile() {
+
   return (
     <div>
       <div className="box-main">
