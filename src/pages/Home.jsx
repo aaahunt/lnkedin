@@ -30,42 +30,46 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="section">
-        <div className="box-main">
-          <div className="secondHalf">
-            <h1 className="text-big" id="program">
-              UX Scheme
-            </h1>
-            <p className="text-small">
-              This is what you'll do on the UX Scheme!
-            </p>
+      <div className="section">
+        <section className="section">
+          <div className="box-main">
+            <div className="secondHalf">
+              <h1 className="text-big" id="program">
+                UX Scheme
+              </h1>
+              <p className="text-small">
+                This is what you'll do on the UX Scheme!
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
-      <section className="section">
-        <div className="box-main">
-          <div className="secondHalf">
-            <h1 className="text-big" id="program">
-              Tech Scheme
-            </h1>
-            <p className="text-small">
-              This is what you'll do on the UX Scheme!
-            </p>
+        </section>
+
+        <section className="section">
+          <div className="box-main">
+            <div className="secondHalf">
+              <h1 className="text-big" id="program">
+                Tech Scheme
+              </h1>
+              <p className="text-small">
+                This is what you'll do on the UX Scheme!
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
-      <section className="section">
-        <div className="box-main">
-          <div className="secondHalf">
-            <h1 className="text-big" id="program">
-              Data Science Scheme
-            </h1>
-            <p className="text-small">
-              This is what you'll do on the Data Science Scheme!
-            </p>
+        </section>
+        <section className="section">
+          <div className="box-main">
+            <div className="secondHalf">
+              <h1 className="text-big" id="program">
+                Data Science Scheme
+              </h1>
+              <p className="text-small">
+                This is what you'll do on the Data Science Scheme!
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
       <footer className="footer">
         <p className="text-footer">Copyright ©-Yellow Team</p>
       </footer>
