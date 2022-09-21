@@ -4,7 +4,8 @@ import Navigation from "./components/Navigation";
 import Profile from "./pages/Profile";
 import Users from "./pages/Users";
 import Login from "./pages/Login";
-import Register from "./pages/Register"
+import Register from "./pages/Register";
+import ViewUser from "./pages/ViewUser";
 
 export default function App() {
 
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="users" element={<Users />} />
         <Route path="register" element={<Register   />} />
+        <Route path="viewuser" element={<ViewUser />} />
       </Routes>
     </BrowserRouter>
   );

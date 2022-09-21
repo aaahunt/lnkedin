@@ -2,6 +2,11 @@ import { useState } from "react";
 import User from "../components/User";
 import NewUser from "./NewUser";
 import { getAll } from "../firebase/functions";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { Button, CardActions } from '@mui/material';
 
 export default function Users() {
   const [search, setSearch] = useState("");
@@ -21,6 +26,7 @@ export default function Users() {
     console.log(searchValue);
   }
 
+ 
   return (
     <div>
       <h2>Users</h2>
@@ -38,18 +44,32 @@ export default function Users() {
       {search && <User search={search} />}
 
       <button onClick={getAllUsers}>Get All</button>
+     
+     
       {data.map((item) => (
         <div key={item.id}>
-          <h1>
-            {item.firstName} {item.lastName}
-          </h1>
-          {item.homeLocation && (
-            <h3>
-              Office: {item.officeLocation}, Home: {item.homeLocation}
-            </h3>
-          )}
+          <Card sx={{ minWidth: 275 }}>
+      <CardContent>
+          <Typography variant="h5" component="div" align="left" >
+          {item.firstName} {item.lastName}
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} align="left">
+          Scheme: {item.role}
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} align="left">
+          Office: {item.officeLocation}
+        </Typography>
+        <CardActions>
+        <Button href={`/viewuser?id=${item.id}`} size="small" color="primary" style={{marginRight:"auto"}} > 
+          View Profile
+        </Button>
+        </CardActions>
+          </CardContent>
+          </Card>
+     
         </div>
       ))}
     </div>
   );
 }
+
