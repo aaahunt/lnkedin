@@ -6,27 +6,12 @@ import Users from "./pages/Users";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ViewUser from "./pages/ViewUser";
+import { getCookie } from "./functions/cookies";
 
 export default function App() {
-
-  // if logged in 
+  
   function isLoggedin() {
-    return (getCookie("user") !== "")
-  }
-
-  function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) === 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
+    return getCookie("user") !== "";
   }
 
   return (
@@ -35,11 +20,12 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={isLoggedin() ? <Home /> : <Login />} />
-        <Route path="home" element={<Home />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="users" element={<Users />} />
-        <Route path="register" element={<Register   />} />
-        <Route path="user" element={<ViewUser />} />
+        <Route path="home" element={isLoggedin() ? <Home /> : <Login />} />
+        <Route path="profile" element={isLoggedin() ? <Profile /> : <Login />} />
+        <Route path="graduates" element={isLoggedin() ? <Users db="Graduates"  /> : <Login />} />
+        <Route path="mentors" element={isLoggedin() ? <Users db="Mentors" /> : <Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

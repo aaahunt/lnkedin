@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/index.css"
 import { checkLogin } from "../firebase/functions";
+import { setCookie } from "../functions/cookies";
 
 function Login() {
   // React States
@@ -19,31 +20,19 @@ function Login() {
     let email = event.target.elements.email.value;
     let pass = event.target.elements.pass.value;
 
-
-    console.log("email", email)
-
     // Find user login info
-    // const userData = database.find((user) => user.username === email.value);
     const userData = await checkLogin(email, pass)
-    
 
     // Compare user info
     if (userData) {
         console.log("userData", userData)
         setIsSubmitted(true);
-        setCookie("user", userData.username, 3)
+        setCookie("user", userData.id, 3)
     } else {
       // Username not found
       setErrorMessages({ name: "email", message: errors.email });
     }
   };
-
-  function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    let expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
 
   // Generate JSX code for error message
   const renderErrorMessage = (name) =>
@@ -65,9 +54,14 @@ function Login() {
           <label>Password </label>
           <input type="password" name="pass" required />
         </div>
+        <div className="underline">
+        <li><a href="/Home">Forgot password?</a></li>
+        </div>
         <div className="button-container">
           <input value="Login" type="submit" />
+          <br></br>
         </div>
+        <li><a href="/Register">Don't have an account? Sign up</a></li>
       </form>
     </div>
   );
@@ -80,7 +74,6 @@ function Login() {
         {isSubmitted ? <div><p>User has been successfully signed in.</p>
         <li><a href="/Home">Click me to continue to the homepage!</a></li></div> : renderForm}
       </div>
-      <a href="/Register">Register</a>
     </div>
   );
 }

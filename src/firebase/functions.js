@@ -8,6 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+const CryptoJS = require("crypto-js");
 
 let callCounter = 0;
 
@@ -19,7 +20,7 @@ export const addUser = async (data) => {
     if (await userExists(data)) {
       return `Error: User with email ${data.email} already exists`;
     } else {
-      if(exceededQuota())  return `too many calls!`;
+      if (exceededQuota()) return `too many calls!`;
       await setDoc(doc(db, "users", data.email), data);
       callCounter++;
       return `User with email ${data.email} created`;
@@ -30,11 +31,24 @@ export const addUser = async (data) => {
   }
 };
 
+export const editUser = async (data) => {
+  try {
+    if (exceededQuota()) return `too many calls!`;
+    await setDoc(doc(db, "users", data.email), data);
+    //await db.collection("users").doc(data.email).update(data);
+    callCounter++;
+    return `User with email ${data.email} editted`;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
 export const userExists = async (data) => {
   try {
     const citiesRef = collection(db, "users");
     const q = query(citiesRef, where("email", "==", data.email));
-    if(exceededQuota())  return `too many calls!`;
+    if (exceededQuota()) return `too many calls!`;
     const querySnapshot = await getDocs(q);
     callCounter++;
 
@@ -53,12 +67,14 @@ export const userExists = async (data) => {
 
 export const getData = async (userID) => {
   const docRef = doc(db, "users", userID);
-  if(exceededQuota())  return `too many calls!`;
+  if (exceededQuota()) return `too many calls!`;
   const docSnap = await getDoc(docRef);
   callCounter++;
 
   if (docSnap.exists()) {
-    console.log("Document data:", docSnap.data());
+    let userInfo = docSnap.data()
+    delete userInfo.password;
+    return userInfo
   } else {
     console.log("No such document!");
   }
@@ -66,7 +82,7 @@ export const getData = async (userID) => {
 
 export const getAll = async () => {
   const q = query(collection(db, "users"));
-  if(exceededQuota())  return `too many calls!`;
+  if (exceededQuota()) return `too many calls!`;
   const results = await getDocs(q);
   callCounter++;
 
@@ -79,7 +95,9 @@ export const getAll = async () => {
 };
 
 export const checkLogin = async (email, pass) => {
+
   const q = query(collection(db, "users"));
+  if (exceededQuota()) return `too many calls!`;
   const results = await getDocs(q);
   callCounter++;
 
@@ -88,12 +106,17 @@ export const checkLogin = async (email, pass) => {
   results.forEach((user) => {
     let dbEmail = user.data().email;
     let dbPass = user.data().password;
+    console.log(dbPass)
+    if(!dbPass) return;
+    // Decrpyt password
+    var bytes = CryptoJS.AES.decrypt(dbPass, 'AIzaSyC4QmDmwTtyi0WQoLB');
+    var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
 
     if (email === dbEmail) {
-      if (pass === dbPass) {
-        returnValue = user.data();
+      if (pass === decryptedPassword) {
+        returnValue = {...user.data(), id: user.id};
       } else {
-        console.log("pass is not the same", pass, dbPass);
+        console.log("pass is not the same", pass, decryptedPassword);
       }
     } else {
       return;
@@ -103,7 +126,35 @@ export const checkLogin = async (email, pass) => {
   return returnValue;
 };
 
-function exceededQuota(){
-  console.log("call counter: " + callCounter)
-  return callCounter > 1000
+export const filterUser = async (search, dbCollection) => {
+  
+  const q = query(collection(db, dbCollection));
+  if (exceededQuota()) return "too many calls!";
+  const querySnapshot = await getDocs(q);
+  callCounter++;
+
+  let users = [];
+
+  querySnapshot.forEach((doc) => {
+    if (!search){
+      users.push({...doc.data(), id: doc.id});
+    } else {
+      let user = doc.data();
+      Object.keys(user).every((item) => {
+        if (user[item].toLowerCase().includes(search.toLowerCase())) {
+          users.push({...doc.data(), id: doc.id});
+          return false;
+        } else{
+          return true;
+        }
+      });
+    }
+    
+  });
+  return users;
+};
+
+function exceededQuota() {
+  console.log("call counter: " + callCounter);
+  return callCounter > 1000;
 }

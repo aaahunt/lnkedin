@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { addUser } from "../firebase/functions";
+const CryptoJS = require("crypto-js");
 
 export default function About() {
   const [msg, setMsg] = useState();
@@ -7,9 +8,13 @@ export default function About() {
   const submitUser = async (event) => {
     event.preventDefault(); // Stops page refresh
 
+    let password = event.target.elements.password.value
+
+    var encryptedPass = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(password), "AIzaSyC4QmDmwTtyi0WQoLB").toString();
+
     let data = {
       email: event.target.elements.email.value,
-      password: event.target.elements.password.value,
+      password: encryptedPass,
       firstName: event.target.elements.firstName.value,
       lastName: event.target.elements.lastName.value,
       officeLocation: event.target.elements.officeLocation.value,
@@ -22,15 +27,16 @@ export default function About() {
       linkedin: event.target.elements.linkedin.value,
     };
     let response = await addUser(data);
-    setMsg(response);
-    console.log("msg", msg)
+    setMsg(response, console.log("msg", msg));
+    
   }
 
   return (
+  <div className="registrationapp">
+  <div className="login-form-registration">
+    <div className="title">Add User</div>
     <div>
-      <h1>Add User</h1>
-      
-      <form onSubmit={submitUser}>
+      <form onSubmit={submitUser} id="registration">
         <input type="email" name="email" placeholder="you@mail.com" required />
         <input
           type="password"
@@ -47,7 +53,7 @@ export default function About() {
           <option value="Nottingham">Nottingham</option>
           <option value="Leeds">Leeds</option>
           <option value="Cardiff">Cardiff</option>
-          <option value="Southhampton">Southhampton</option>
+          <option value="Southampton">Southampton</option>
         </select>
         <select name="role">
           <option value="UX">UX</option>
@@ -87,5 +93,7 @@ export default function About() {
       </form>
       {msg && <p>{msg}</p>}
     </div>
+    </div>
+</div>
   );
 }
