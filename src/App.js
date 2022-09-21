@@ -5,6 +5,7 @@ import Profile from "./pages/Profile";
 import Users from "./pages/Users";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ViewUser from "./pages/ViewUser";
 import { getCookie } from "./functions/cookies";
 
 export default function App() {
