@@ -60,7 +60,7 @@ export default function Users() {
           Office: {item.officeLocation}
         </Typography>
         <CardActions>
-        <Button href={`/viewuser?id=${item.id}`} size="small" color="primary" style={{marginRight:"auto"}} > 
+        <Button href={`/user?id=${item.id}`} size="small" color="primary" style={{marginRight:"auto"}} > 
           View Profile
         </Button>
         </CardActions>

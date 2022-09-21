@@ -39,7 +39,7 @@ export default function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="users" element={<Users />} />
         <Route path="register" element={<Register   />} />
-        <Route path="viewuser" element={<ViewUser />} />
+        <Route path="user" element={<ViewUser />} />
       </Routes>
     </BrowserRouter>
   );
