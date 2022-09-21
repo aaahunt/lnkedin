@@ -1,6 +1,4 @@
 import { useState } from "react";
-import User from "../components/User";
-import NewUser from "./NewUser";
 import { getAll } from "../firebase/functions";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -19,9 +17,6 @@ export default function Users(props) {
       <h1>{props.db}</h1>
       <Search callback={setData} db={props.db} />
 
-      <button onClick={getAllUsers}>Get All</button>
-     
-     
       {data.map((item) => (
         <div key={item.id}>
           <Card sx={{ minWidth: 275 }}>

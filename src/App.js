@@ -26,6 +26,7 @@ export default function App() {
         <Route path="mentors" element={isLoggedin() ? <Users db="Mentors" /> : <Login />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
+        <Route path="user" element={ <ViewUser /> } />
       </Routes>
     </BrowserRouter>
   );
