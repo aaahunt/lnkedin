@@ -20,7 +20,7 @@ function Profile() {
       <section className="profile">
         <div>
           <img src={placeholderImage} alt="Logo" id="placeholderImage" />;
-          {userData && <h1>{userData.firstName} {userData.lastName}</h1>}
+          {userData && <h1 className="profileName">{userData.firstName} {userData.lastName}</h1>}
         </div>
         <div>
           <EditProfile userData={userData} />

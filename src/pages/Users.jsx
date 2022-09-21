@@ -5,9 +5,18 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Button, CardActions } from "@mui/material";
 import Search from "../components/Search";
+import { useLocation } from "react-router-dom";
 
 export default function Users(props) {
   const [data, setData] = useState([]);
+
+  let location = useLocation();
+
+  React.useEffect(() => {
+    setData([]);
+    let input = document.getElementById("searchField");
+    if (input) input.value = "";
+  }, [location]);
 
   return (
     <div>
