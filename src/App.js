@@ -5,7 +5,6 @@ import Profile from "./pages/Profile";
 import Users from "./pages/Users";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Mentors from "./pages/Mentors";
 import { getCookie } from "./functions/cookies";
 
 export default function App() {
@@ -22,8 +21,8 @@ export default function App() {
         <Route path="/" element={isLoggedin() ? <Home /> : <Login />} />
         <Route path="home" element={isLoggedin() ? <Home /> : <Login />} />
         <Route path="profile" element={isLoggedin() ? <Profile /> : <Login />} />
-        <Route path="users" element={isLoggedin() ? <Users /> : <Login />} />
-        <Route path="mentors" element={isLoggedin() ? <Mentors /> : <Login />} />
+        <Route path="graduates" element={isLoggedin() ? <Users db="Graduates"  /> : <Login />} />
+        <Route path="mentors" element={isLoggedin() ? <Users db="Mentors" /> : <Login />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
       </Routes>

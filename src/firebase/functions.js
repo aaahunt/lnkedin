@@ -113,9 +113,9 @@ export const checkLogin = async (email, pass) => {
   return returnValue;
 };
 
-export const filterUser = async (search) => {
+export const filterUser = async (search, dbCollection) => {
   
-  const q = query(collection(db, "users"));
+  const q = query(collection(db, dbCollection));
   if (exceededQuota()) return "too many calls!";
   const querySnapshot = await getDocs(q);
   callCounter++;

@@ -18,19 +18,21 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="section">
-        <div className="box-main">
-          <div className="secondHalf">
-            <h1 className="text-big" id="program">
-              Product Scheme
-            </h1>
-            <p className="text-small">
-              This is what you'll do on the Product Scheme!
-            </p>
-          </div>
-        </div>
-      </section>
+
       <div className="section">
+        <section className="section">
+          <div className="box-main">
+            <div className="secondHalf">
+              <h1 className="text-big" id="program">
+                Product Scheme
+              </h1>
+              <p className="text-small">
+                This is what you'll do on the Product Scheme!
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section className="section">
           <div className="box-main">
             <div className="secondHalf">
