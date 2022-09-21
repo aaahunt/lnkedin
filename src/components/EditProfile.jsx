@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { editUser, getData } from "../firebase/functions";
-import { getCookie } from "../functions/cookies";
+import React, { useState } from "react";
+import { editUser } from "../firebase/functions";
 import "../css/index.css";
 
-function EditProfile() {
-  const [state, setState] = useState();
+function EditProfile(props) {
+  
+  const [msg, setMsg] = useState();
 
-  useEffect(() => {
-    getData(getCookie("user")).then((result) => {
-      setState(result);
-    });
-  }, []);
-
-  async function submitButtonOn(event){
-    event.preventDefault()
+  async function submitButtonOn(event) {
+    event.preventDefault();
     let data = {
       email: event.target.elements.email.value,
-      firstName: event.target.elements.firstName.value,
-      lastName: event.target.elements.lastName.value,
       officeLocation: event.target.elements.officeLocation.value,
       role: event.target.elements.role.value,
       hobbies: event.target.elements.hobbies.value,
@@ -27,31 +19,19 @@ function EditProfile() {
       bio: event.target.elements.bio.value,
       linkedin: event.target.elements.linkedin.value,
     };
-    console.log(data)
-    await editUser(data);
-    
+    editUser(data).then((res) => {
+      setMsg(res);
+      console.log("response==", res)
+    });
   }
 
   return (
     <div className="formtext">
-      {state && (
+      {props.userData && (
         <div>
           <form onSubmit={submitButtonOn} id="registration">
-            <input type="email" name="email" defaultValue={state.email} disabled />
 
-            <input
-              type="text"
-              name="firstName"
-              defaultValue={state.firstName}
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              defaultValue={state.lastName}
-              required
-            />
-
+            <label htmlFor="officeLocation">Location</label>
             <select name="officeLocation">
               <option value="Bishopsgate">Bishopsgate</option>
               <option value="Sutton">Sutton</option>
@@ -60,44 +40,46 @@ function EditProfile() {
               <option value="Cardiff">Cardiff</option>
               <option value="Southhampton">Southhampton</option>
             </select>
+
+            <label htmlFor="role">Role</label>
             <select name="role">
               <option value="UX">UX</option>
               <option value="Tech">Tech</option>
               <option value="Data Science">Data Science</option>
               <option value="Product">Product</option>
             </select>
-            <input
-              type="text"
-              name="hobbies"
-              defaultValue={state.hobbies}
-            />
+            <label htmlFor="hobbies">Hobbies</label>
+            <input type="text" name="hobbies"  placeholder="Hobbies (comma separated)" defaultValue={props.userData.hobbies} />
+
+            <label htmlFor="currentSkills">Skills</label>
             <input
               type="text"
               name="currentSkills"
-              defaultValue={state.currentSkills}
+              placeholder="Current skills (comma separated)"
+              defaultValue={props.userData.currentSkills}
             />
-            <input type="text" name="degree" defaultValue={state.degree} />
+
+            <label htmlFor="degree">Degree</label>
+            <input type="text" name="degree" placeholder="Degree" defaultValue={props.userData.degree} />
+
+            <label htmlFor="desiredSkills">Desired Skills</label>
             <input
               type="text"
               name="desiredSkills"
-              defaultValue={state.desiredSkills}
-            />
-            <textarea
-              rows="4"
-              name="bio"
-              defaultValue={state.bio}
+              placeholder="Desired skills (comma separated)"
+              defaultValue={props.userData.desiredSkills}
             />
 
-            <input
-              type="text"
-              name="linkedin"
-              defaultValue={state.linkedin}
-            />
+            <label htmlFor="bio">Bio</label>
+            <textarea rows="4" name="bio" placeholder="Enter your bio here" defaultValue={props.userData.bio} />
+
+            <label htmlFor="linkedin">LinkedIn URL</label>
+            <input type="text" name="linkedin" placeholder="LinkedIn URL" defaultValue={props.userData.linkedin} />
             <input type="submit" value="Update Profile" />
           </form>
-          
         </div>
       )}
+      {msg && <p>{msg}</p>}
     </div>
   );
 }
