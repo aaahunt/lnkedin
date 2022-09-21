@@ -188,7 +188,10 @@ background-color: #000;
 	height: 37px;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
-	padding: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 6px;
+	padding-right: 6px;
 	margin: 1rem;
   }
 

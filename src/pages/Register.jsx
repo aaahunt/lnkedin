@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addUser } from "../firebase/functions";
+import { useNavigate } from "react-router";
 const CryptoJS = require("crypto-js");
 
 export default function About() {
-  const [msg, setMsg] = useState();
+  const [value, setValue] = useState("default");
+  const [redirect, setRedirect] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("are we redirecting", redirect)
+    if(redirect){
+      navigate('/login')
+    }
+  
+  },[redirect,navigate])
+  
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
 
   const submitUser = async (event) => {
     event.preventDefault(); // Stops page refresh
@@ -26,28 +43,31 @@ export default function About() {
       bio: event.target.elements.bio.value,
       linkedin: event.target.elements.linkedin.value,
     };
-    let response = await addUser(data);
-    setMsg(response, console.log("msg", msg));
+    addUser(data).then(res =>
+      setRedirect(res)
+    );
     
   }
 
-  return (
+  return(
   <div className="registrationapp">
   <div className="login-form-registration">
-    <div className="title">Add User</div>
+    <div className="title">Sign Up</div>
     <div>
       <form onSubmit={submitUser} id="registration">
-        <input type="email" name="email" placeholder="you@mail.com" required />
+        <input type="text" name="firstName" placeholder="First name" required />
+        <input type="text" name="lastName" placeholder="Last name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
         <input
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="Password"
           required
         />
-        <input type="text" name="firstName" placeholder="First name" required />
-        <input type="text" name="lastName" placeholder="Last name" required />
-
-        <select name="officeLocation">
+        <select name="officeLocation" defaultValue={value} onChange={handleChange}>
+        <option value="default" disabled hidden>
+          Location
+        </option>
           <option value="Bishopsgate">Bishopsgate</option>
           <option value="Sutton">Sutton</option>
           <option value="Nottingham">Nottingham</option>
@@ -55,12 +75,21 @@ export default function About() {
           <option value="Cardiff">Cardiff</option>
           <option value="Southampton">Southampton</option>
         </select>
-        <select name="role">
+        <select name="role" defaultValue={value} onChange={handleChange}>
+        <option value="default" disabled hidden>
+          Role
+        </option>
           <option value="UX">UX</option>
           <option value="Tech">Tech</option>
           <option value="Data Science">Data Science</option>
           <option value="Product">Product</option>
         </select>
+        <input type="text" name="degree" placeholder="Education" />
+        <textarea
+          rows="4"
+          name="bio"
+          placeholder="Enter a short bio (optional)..."
+        />
         <input
           type="text"
           name="hobbies"
@@ -71,27 +100,20 @@ export default function About() {
           name="currentSkills"
           placeholder="Skills (comma separated)"
         />
-        <input type="text" name="degree" placeholder="Degree" />
         <input
           type="text"
           name="desiredSkills"
           placeholder="Desired Skills (comma separated)"
         />
-        <textarea
-          rows="4"
-          name="bio"
-          placeholder="Enter a short bio (optional)..."
-        />
 
         <input
           type="text"
           name="linkedin"
-          placeholder="Enter your linked in URL (optional)"
+          placeholder="Enter your LinkedIn URL (optional)"
         />
 
-        <input type="submit" value="Add user" />
+        <input type="submit" value="Create Account" />
       </form>
-      {msg && <p>{msg}</p>}
     </div>
     </div>
 </div>

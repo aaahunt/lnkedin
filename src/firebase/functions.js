@@ -23,11 +23,11 @@ export const addUser = async (data) => {
       if (exceededQuota()) return `too many calls!`;
       await setDoc(doc(db, "users", data.email), data);
       callCounter++;
-      return `User with email ${data.email} created`;
+      return true;
     }
   } catch (err) {
     console.log(err);
-    return err;
+    return false
   }
 };
 
