@@ -19,10 +19,12 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={isLoggedin() ? <Home /> : <Login />} />
-        <Route path="home" element={<Home />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="users" element={<Users />} />
+        <Route path="home" element={isLoggedin() ? <Home /> : <Login />} />
+        <Route path="profile" element={isLoggedin() ? <Profile /> : <Login />} />
+        <Route path="graduates" element={isLoggedin() ? <Users db="Graduates"  /> : <Login />} />
+        <Route path="mentors" element={isLoggedin() ? <Users db="Mentors" /> : <Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

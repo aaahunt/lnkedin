@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getData } from "../firebase/functions";
+import { editUser, getData } from "../firebase/functions";
 import { getCookie } from "../functions/cookies";
 import "../css/index.css";
 
@@ -12,11 +12,31 @@ function EditProfile() {
     });
   }, []);
 
+  async function submitButtonOn(event){
+    event.preventDefault()
+    let data = {
+      email: event.target.elements.email.value,
+      firstName: event.target.elements.firstName.value,
+      lastName: event.target.elements.lastName.value,
+      officeLocation: event.target.elements.officeLocation.value,
+      role: event.target.elements.role.value,
+      hobbies: event.target.elements.hobbies.value,
+      currentSkills: event.target.elements.currentSkills.value,
+      desiredSkills: event.target.elements.desiredSkills.value,
+      degree: event.target.elements.degree.value,
+      bio: event.target.elements.bio.value,
+      linkedin: event.target.elements.linkedin.value,
+    };
+    console.log(data)
+    await editUser(data);
+    
+  }
+
   return (
     <div className="formtext">
       {state && (
         <div>
-          <form id="registration">
+          <form onSubmit={submitButtonOn} id="registration">
             <input type="email" name="email" defaultValue={state.email} disabled />
 
             <input
@@ -73,9 +93,9 @@ function EditProfile() {
               name="linkedin"
               defaultValue={state.linkedin}
             />
-
             <input type="submit" value="Update Profile" />
           </form>
+          
         </div>
       )}
     </div>
