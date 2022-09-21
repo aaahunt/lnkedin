@@ -19,7 +19,7 @@ export default function Users() {
 
   return (
     <div>
-      <h2>Users</h2>
+      <h1>Users</h1>
 
       <form>
         <input

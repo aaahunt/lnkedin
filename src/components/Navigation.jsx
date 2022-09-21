@@ -10,15 +10,14 @@ export default function Navigation() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/users">Users</Link>
+          <Link to="/users">Graduates</Link>
         </li>
         <li>
-          <Link to="/profile">My Profile</Link>
+          <Link to="/mentors">Mentors</Link>
         </li>
       </ul>
       <div className="rightNav">
-        <input type="text" name="search" id="search" />
-        <button className="btn btn-sm">Search</button>
+        <Link to="/profile">My Profile</Link>
       </div>
     </nav>
   );
