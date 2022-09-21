@@ -31,6 +31,19 @@ export const addUser = async (data) => {
   }
 };
 
+export const editUser = async (data) => {
+  try {
+    if (exceededQuota()) return `too many calls!`;
+    await setDoc(doc(db, "users", data.email), data);
+    //await db.collection("users").doc(data.email).update(data);
+    callCounter++;
+    return `User with email ${data.email} editted`;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
 export const userExists = async (data) => {
   try {
     const citiesRef = collection(db, "users");
