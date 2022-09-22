@@ -60,6 +60,7 @@ function Login() {
 
   return (
     <div className="app">
+      <div className="logo"><h1>RSG Bridge</h1></div>
       <div className="login-form">
         <div className="title">Login</div>
         {renderForm}
