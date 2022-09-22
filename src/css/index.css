@@ -31,7 +31,11 @@ background-color: #000;
     padding: 1rem;
 }
 #placeholderImage{
-	max-width: 300px;
+	max-width: 200px;
+}
+.flex-box{
+	display: flex;
+	justify-content: center;
 }
 
 .nav-list {
