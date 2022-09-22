@@ -19,3 +19,7 @@ export function getCookie(cname) {
   }
   return "";
 }
+
+export function getEmail(){
+  return getCookie("user")
+}

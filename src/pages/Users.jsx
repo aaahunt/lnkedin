@@ -6,10 +6,10 @@ import * as React from "react";
 import { Button, CardActions } from "@mui/material";
 import Search from "../components/Search";
 import { useLocation } from "react-router-dom";
+import Suggested from "../components/Suggested";
 
 export default function Users(props) {
   const [data, setData] = useState([]);
-
   let location = useLocation();
 
   React.useEffect(() => {
@@ -24,6 +24,7 @@ export default function Users(props) {
       <div className="full">
         <h1>{props.db}</h1>
         <p>Search our full directory of {props.db}</p>
+        <Suggested type={props.db} />
         <Search callback={setData} db={props.db} />
 
         <section className="cards">

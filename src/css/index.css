@@ -15,8 +15,20 @@
 	cursor: pointer;
 }
 
+#suggested{
+	margin: 1rem 0;
+}
+
+#suggested a{
+	background: #cc2a28;
+    padding: 10px;
+    display: inline-block;
+    margin: 10px 10px 10px 0;
+    color: white;
+}
+
 .footer {
-background-color: #000;
+background-color: #37718e;
 }
 .profile{
 	display: flex;
@@ -251,10 +263,10 @@ section.cards {
   }
 
   input[type="submit"] {
+	background: #254e70;
 	margin-top: 10px;
 	cursor: pointer;
 	font-size: 14px;
-	background: black;
 	border: 1px solid black;
 	color: #fff;
 	padding: 8px 15px;
@@ -298,6 +310,9 @@ section.cards {
 	font-size: 12px;
   }
   
+  h1, h2, h3{
+	color: #37718e;
+  }
   .title {
 	font-size: 25px;
 	margin-bottom: 20px;

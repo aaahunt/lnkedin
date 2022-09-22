@@ -9,6 +9,7 @@ import {
   where,
 } from "firebase/firestore";
 const CryptoJS = require("crypto-js");
+var stringSimilarity = require("string-similarity");
 
 let callCounter = 0;
 
@@ -27,7 +28,7 @@ export const addUser = async (data) => {
     }
   } catch (err) {
     console.log(err);
-    return false
+    return false;
   }
 };
 
@@ -40,15 +41,13 @@ export const editUser = async (data) => {
 
     getDoc(docRef).then((res) => {
       callCounter++;
-      let fullData = {...res.data(), ...data}
+      let fullData = { ...res.data(), ...data };
 
-      setDoc(doc(db, "users", userID), fullData).then(res => {
+      setDoc(doc(db, "users", userID), fullData).then((res) => {
         callCounter++;
-        return "User profile () updated"
+        return "User profile () updated";
       });
-
     });
-    
   } catch (err) {
     console.log(err);
     return "Error editing user";
@@ -162,6 +161,43 @@ export const filterUser = async (search, dbCollection) => {
 };
 
 function exceededQuota() {
-  console.log("call counter: " + callCounter);
   return callCounter > 1000;
 }
+
+export const getSuggested = async (type, email, n) => {
+  if (exceededQuota()) return "too many calls!";
+  let suggested = [];
+
+  let userData = await getData(email);
+  let desiredSkills = userData.desiredSkills;
+  let hobbies = userData.hobbies;
+
+  const table = (type === "Graduates") ? "users" : "mentors"
+
+  const q = query(collection(db, table));
+
+  let querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    let person = doc.data();
+    let score;
+    if(type === "Graduates"){
+      score = stringSimilarity.compareTwoStrings(
+        person.hobbies,
+        hobbies
+      );
+    } else {
+      score = stringSimilarity.compareTwoStrings(
+        person.currentSkills,
+        desiredSkills
+      );
+    }
+
+    person = { ...person, similarity: score };
+    if(person.email !== email)
+      suggested.push(person);
+  });
+
+  suggested.sort((a, b) => b.similarity - a.similarity);
+
+  return suggested.slice(0, n);
+};

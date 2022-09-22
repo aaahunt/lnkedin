@@ -14,16 +14,17 @@ import placeholderImage from "../img/placeholder.jpg";
 export default function ViewUser() {
   const search = useLocation().search;
   const id = new URLSearchParams(search).get("id");
+  const type = new URLSearchParams(search).get("type");
+  const table = (type === "Graduates") ? "users" : "mentors"
   const [user, setUser] = useState([]);
 
   useEffect(() => {
-    const docref = doc(db, "users", id);
+    const docref = doc(db, table, id);
     getDoc(docref).then((res) => {
       let user = res.data();
       setUser(user);
-      console.log(user);
     });
-  }, [id]);
+  }, [id, table]);
 
   return (
     <div className="ViewUser">
