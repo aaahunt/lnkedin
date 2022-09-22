@@ -16,17 +16,14 @@ export default function ViewUser() {
   const id = new URLSearchParams(search).get("id");
   const [user, setUser] = useState([]);
 
-  const getUsers = async () => {
+  useEffect(() => {
     const docref = doc(db, "users", id);
     getDoc(docref).then((res) => {
       let user = res.data();
       setUser(user);
       console.log(user);
     });
-  };
-  useEffect(() => {
-    getUsers();
-  }, []);
+  }, [id]);
 
   return (
     <div className="ViewUser">
@@ -36,13 +33,21 @@ export default function ViewUser() {
             <div>
               <Typography variant="h5" component="div" align="left">
                 {user.firstName} {user.lastName}
-                <CardMedia component="img" id="placeholderImage" image={placeholderImage} alt="Logo"/>
+                <CardMedia
+                  component="img"
+                  id="placeholderImage"
+                  image={placeholderImage}
+                  alt="Logo"
+                />
               </Typography>
             </div>
             <div>
               <Typography sx={{ mb: 1.5 }} align="center">
-                <b>Scheme:</b> <b/>{user.role} - <b>Office:</b> {user.officeLocation} - <b>Degree: </b>{user.degree}
-                 <br></br>
+                <b>Scheme:</b> <b />
+                {user.role} - <b>Office:</b> {user.officeLocation} -{" "}
+                <b>Degree: </b>
+                {user.degree}
+                <br></br>
               </Typography>
               <Typography sx={{ mb: 1.5 }} align="left">
                 <b>Bio</b> <br /> {user.bio}
@@ -57,11 +62,19 @@ export default function ViewUser() {
                 <b>Desired Skills</b> <br /> {user.desiredSkills}
               </Typography>
               <CardActions>
-                <a href={user.linkedin} target="_blank" rel="noopener noreferrer external" >
-                <div style={{ display: "flex", justifyContent: 'right' }}>
-                  <Button size="small"color="primary" alignItems="right" style={{ marginRight: "auto" }} >
-                    Linkedin
-                  </Button>
+                <a
+                  href={user.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer external"
+                >
+                  <div style={{ display: "flex", justifyContent: "right" }}>
+                    <Button
+                      size="small"
+                      color="primary"
+                      style={{ marginRight: "auto" }}
+                    >
+                      Linkedin
+                    </Button>
                   </div>
                 </a>
               </CardActions>

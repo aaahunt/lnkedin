@@ -22,7 +22,7 @@ function EditProfile(props) {
     editUser(data).then((res) => {
       setMsg(res);
       console.log("response==", res)
-    });
+    })
   }
 
   return (
@@ -81,7 +81,7 @@ function EditProfile(props) {
       )}
       {msg && <p>{msg}</p>}
     </div>
-  );
+  )
 }
 
 export default EditProfile;

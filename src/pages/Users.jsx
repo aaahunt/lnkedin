@@ -42,7 +42,7 @@ export default function Users(props) {
                   </Typography>
                   <CardActions>
                     <Button
-                      href={`/user?id=${item.id}?type=${props.db}`}
+                      href={`/user?id=${item.id}&type=${props.db}`}
                       size="small"
                       color="primary"
                       style={{ marginRight: "auto" }}
