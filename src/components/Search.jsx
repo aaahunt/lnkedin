@@ -1,14 +1,15 @@
-import React from "react";
+import { React } from "react";
 import { filterUser } from "../firebase/functions";
 
 export default function Search(props) {
+
   const handleChange = async (e) => {
     let search = e ? e.target.value : "";
 
     let dbCollection = String(props.db).toLowerCase();
     console.log("dbCollection", dbCollection);
 
-    dbCollection = (dbCollection === "graduates" ? "users" : dbCollection)
+    dbCollection = dbCollection === "graduates" ? "users" : dbCollection;
 
     let returnValue = await filterUser(search, dbCollection);
     if (!returnValue) {
@@ -18,7 +19,7 @@ export default function Search(props) {
 
     props.callback(returnValue);
   };
-
+  
   return (
     <form id="search">
       <input

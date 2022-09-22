@@ -116,7 +116,6 @@ export const checkLogin = async (email, pass) => {
   results.forEach((user) => {
     let dbEmail = user.data().email;
     let dbPass = user.data().password;
-    console.log(dbPass);
     if (!dbPass) return;
     // Decrpyt password
     var bytes = CryptoJS.AES.decrypt(dbPass, "AIzaSyC4QmDmwTtyi0WQoLB");

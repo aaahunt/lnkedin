@@ -17,7 +17,7 @@ export default function Navigation() {
         </li>
       </ul>
       <div className="rightNav">
-        <Link to="/profile">My Profile</Link>
+            <Link to="/profile">My Profile</Link>
       </div>
     </nav>
   );

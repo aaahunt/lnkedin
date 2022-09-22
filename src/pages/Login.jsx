@@ -1,51 +1,39 @@
-import React, { useState } from "react";
-import "../css/index.css"
+import React, { useEffect, useState } from "react";
+import "../css/index.css";
 import { checkLogin } from "../firebase/functions";
 import { setCookie } from "../functions/cookies";
 
 function Login() {
-  // React States
-  const [errorMessages, setErrorMessages] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
-  const errors = {
-    email: "Invalid email or password",
-    pass: "Invalid email or password"
-  };
+  useEffect(() => {
+    setCookie("user", "", -999) // clear logged in cookie
+  }, [])
+  
 
   const handleSubmit = async (event) => {
-    //Prevent page reload
     event.preventDefault();
 
     let email = event.target.elements.email.value;
     let pass = event.target.elements.pass.value;
 
     // Find user login info
-    const userData = await checkLogin(email, pass)
-
-    // Compare user info
-    if (userData) {
-        console.log("userData", userData)
-        setIsSubmitted(true);
-        setCookie("user", userData.id, 3)
-    } else {
-      // Username not found
-      setErrorMessages({ name: "email", message: errors.email });
-    }
+    checkLogin(email, pass).then((userData) => {
+      if (userData) {
+        setCookie("user", userData.id, 3);
+        window.location.replace("/home");
+      } else {
+        // Username not found
+        setErrorMessage("Invalid email or password");
+      }
+    });
   };
-
-  // Generate JSX code for error message
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className="error">{errorMessages.message}</div>
-    );
 
   // JSX code for login form
   const renderForm = (
     <div className="form">
       <form onSubmit={handleSubmit}>
-        {renderErrorMessage("email")}
-        {renderErrorMessage("pass")}  
+        {errorMessage && <div className="error">{errorMessage}</div>}
         <div className="input-container">
           <label>Email </label>
           <input type="text" name="email" required />
@@ -55,13 +43,17 @@ function Login() {
           <input type="password" name="pass" required />
         </div>
         <div className="underline">
-        <li><a href="/Home">Forgot password?</a></li>
+          <li>
+            <a href="/Home">Forgot password?</a>
+          </li>
         </div>
         <div className="button-container">
           <input value="Login" type="submit" />
           <br></br>
         </div>
-        <li><a href="/Register">Don't have an account? Sign up</a></li>
+        <li>
+          <a href="/Register">Don't have an account? Sign up</a>
+        </li>
       </form>
     </div>
   );
@@ -70,9 +62,7 @@ function Login() {
     <div className="app">
       <div className="login-form">
         <div className="title">Login</div>
-        
-        {isSubmitted ? <div><p>User has been successfully signed in.</p>
-        <li><a href="/Home">Click me to continue to the homepage!</a></li></div> : renderForm}
+        {renderForm}
       </div>
     </div>
   );

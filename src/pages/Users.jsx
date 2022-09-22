@@ -16,40 +16,46 @@ export default function Users(props) {
     setData([]);
     let input = document.getElementById("searchField");
     if (input) input.value = "";
+
   }, [location]);
 
   return (
-    <div>
-      <h1>{props.db}</h1>
-      <Search callback={setData} db={props.db} />
+    <section className="section">
+      <div className="full">
+        <h1>{props.db}</h1>
+        <p>Search our full directory of {props.db}</p>
+        <Search callback={setData} db={props.db} />
 
-      {data.map((item) => (
-        <div key={item.id}>
-          <Card sx={{ minWidth: 275 }}>
-            <CardContent>
-              <Typography variant="h5" component="div" align="left">
-                {item.firstName} {item.lastName}
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} align="left">
-                Scheme: {item.role}
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} align="left">
-                Office: {item.officeLocation}
-              </Typography>
-              <CardActions>
-                <Button
-                  href={`/user?id=${item.id}`}
-                  size="small"
-                  color="primary"
-                  style={{ marginRight: "auto" }}
-                >
-                  View Profile
-                </Button>
-              </CardActions>
-            </CardContent>
-          </Card>
-        </div>
-      ))}
-    </div>
+        <section className="cards">
+          {data.map((item) => (
+            <div key={item.id}>
+              <Card sx={{ minWidth: 275 }} className="card">
+                <CardContent>
+                  <Typography variant="h5" component="div" align="left">
+                    {item.firstName} {item.lastName}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} align="left">
+                    Scheme: {item.role}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} align="left">
+                    Office: {item.officeLocation}
+                  </Typography>
+                  <CardActions>
+                    <Button
+                      href={`/user?id=${item.id}`}
+                      size="small"
+                      color="primary"
+                      style={{ marginRight: "auto" }}
+                    >
+                      View Profile
+                    </Button>
+                  </CardActions>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </section>
+      </div>
+    </section>
   );
 }
