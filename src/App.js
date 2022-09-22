@@ -7,8 +7,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ViewUser from "./pages/ViewUser";
 import { getCookie } from "./functions/cookies";
+import { useState } from "react";
 
 export default function App() {
+
+  const [forceHide, setForceHide] = useState(false)
   
   function isLoggedin() {
     return getCookie("user") !== "";
@@ -16,12 +19,12 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      {isLoggedin() && <Navigation />}
+      {isLoggedin() && !forceHide && <Navigation />}
 
       <Routes>
         <Route path="/" element={isLoggedin() ? <Home /> : <Login />} />
         <Route path="home" element={isLoggedin() ? <Home /> : <Login />} />
-        <Route path="profile" element={isLoggedin() ? <Profile /> : <Login />} />
+        <Route path="profile" element={isLoggedin() ? <Profile hide={setForceHide} /> : <Login />} />
         <Route path="graduates" element={isLoggedin() ? <Users db="Graduates"  /> : <Login />} />
         <Route path="mentors" element={isLoggedin() ? <Users db="Mentors" /> : <Login />} />
         <Route path="register" element={<Register />} />

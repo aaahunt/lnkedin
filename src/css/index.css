@@ -28,8 +28,13 @@
 .profile div {
   padding: 5px;
 }
+.profile .picture{
+  text-align: center;
+}
 .profileName {
   text-align: center;
+  display: block;
+  padding: 1rem;
 }
 #placeholderImage {
   max-width: 200px;
