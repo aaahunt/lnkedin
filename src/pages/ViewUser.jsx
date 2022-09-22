@@ -65,17 +65,10 @@ export default function ViewUser() {
                 <a
                   href={user.linkedin}
                   target="_blank"
-                  rel="noopener noreferrer external"
-                >
-                  <div style={{ display: "flex", justifyContent: "right" }}>
-                    <Button
-                      size="small"
-                      color="primary"
-                      style={{ marginRight: "auto" }}
-                    >
+                  rel="noopener noreferrer external" >
+                  <Button variant="outline-secondary" size="small" color="primary" className="profile-button" >
                       Linkedin
-                    </Button>
-                  </div>
+                    </Button> 
                 </a>
               </CardActions>
             </div>
