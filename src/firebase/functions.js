@@ -11,6 +11,8 @@ import {
 const CryptoJS = require("crypto-js");
 var stringSimilarity = require("string-similarity");
 
+let cachedData = []
+
 let callCounter = 0;
 
 // Find documentation for firebase functions here: https://firebase.google.com/docs/firestore/quickstart
@@ -136,10 +138,18 @@ export const checkLogin = async (email, pass) => {
 };
 
 export const filterUser = async (search, dbCollection) => {
-  const q = query(collection(db, dbCollection));
-  if (exceededQuota()) return "too many calls!";
-  const querySnapshot = await getDocs(q);
-  callCounter++;
+  let querySnapshot;
+
+  if(cachedData.length === 0){
+    const q = query(collection(db, dbCollection));
+    if (exceededQuota()) return "too many calls!";
+    querySnapshot = await getDocs(q);
+    cachedData = querySnapshot
+    callCounter++;
+  } else {
+    querySnapshot = cachedData
+    console.log("use cached data")
+  }
 
   let users = [];
 
