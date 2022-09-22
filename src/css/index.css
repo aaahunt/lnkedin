@@ -30,7 +30,11 @@ background-color: #000;
 	text-align: center;
 }
 #placeholderImage{
-	max-width: 300px;
+	max-width: 200px;
+}
+.flex-box{
+	display: flex;
+	justify-content: center;
 }
 
 .nav-list {

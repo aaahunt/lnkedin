@@ -1,33 +1,73 @@
 import "../css/index.css";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../firebase/init";
 import { doc, getDoc } from "firebase/firestore";
 import { useLocation } from "react-router-dom";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { Button, CardActions } from "@mui/material";
+import CardMedia from "@mui/material/CardMedia";
+import placeholderImage from "../img/placeholder.jpg";
 
 export default function ViewUser() {
-  const [user, setUser] = useState([]);
   const search = useLocation().search;
   const id = new URLSearchParams(search).get("id");
+  const [user, setUser] = useState([]);
 
-  const docref = doc(db, "users", id);
-  if (user.length < 1) {
+  const getUsers = async () => {
+    const docref = doc(db, "users", id);
     getDoc(docref).then((res) => {
       let user = res.data();
       setUser(user);
       console.log(user);
     });
-  }
+  };
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <div className="ViewUser">
       {user && (
-        <div className="blog-container">
-          <h4>
-            {user.firstName} {user.lastName}
-          </h4>
-          <p>{user.hobbies}</p>
-        </div>
+        <Card sx={{ minWidth: 50 }}>
+          <CardContent className="flex-box">
+            <div>
+              <Typography variant="h5" component="div" align="left">
+                {user.firstName} {user.lastName}
+                <CardMedia component="img" id="placeholderImage" image={placeholderImage} alt="Logo"/>
+              </Typography>
+            </div>
+            <div>
+              <Typography sx={{ mb: 1.5 }} align="center">
+                <b>Scheme:</b> <b/>{user.role} - <b>Office:</b> {user.officeLocation} - <b>Degree: </b>{user.degree}
+                 <br></br>
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} align="left">
+                <b>Bio</b> <br /> {user.bio}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} align="left">
+                <b>Hobbies</b> <br /> {user.hobbies}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} align="left">
+                <b>Current Skills</b> <br /> {user.currentSkills}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} align="left">
+                <b>Desired Skills</b> <br /> {user.desiredSkills}
+              </Typography>
+              <CardActions>
+                <a href={user.linkedin} target="_blank" rel="noopener noreferrer external" >
+                <div style={{ display: "flex", justifyContent: 'right' }}>
+                  <Button size="small"color="primary" alignItems="right" style={{ marginRight: "auto" }} >
+                    Linkedin
+                  </Button>
+                  </div>
+                </a>
+              </CardActions>
+            </div>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
