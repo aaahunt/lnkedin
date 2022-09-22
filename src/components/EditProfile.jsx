@@ -24,7 +24,6 @@ function EditProfile(props) {
     }
     editUser(data).then((res) => {
       setMsg(res)
-      console.log("response==", res)
     })
   }
 

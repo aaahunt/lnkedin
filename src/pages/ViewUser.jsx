@@ -28,7 +28,6 @@ export default function ViewUser() {
 
   return (
     <div className="ViewUser">
-      {console.log("user", user)}
       {user && (
         <Card class="container">
           <CardContent className="flex-box">

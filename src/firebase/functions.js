@@ -38,8 +38,6 @@ export const editUser = async (data) => {
   try {
     if (exceededQuota()) return `too many calls!`;
 
-    console.log("datain,", data)
-
     const docRef = doc(db, "users", data.email);
     const userID = data.email;
 
@@ -126,8 +124,6 @@ export const checkLogin = async (email, pass) => {
     if (email === dbEmail) {
       if (pass === decryptedPassword) {
         returnValue = { ...user.data(), id: user.id };
-      } else {
-        console.log("pass is not the same", pass, decryptedPassword);
       }
     } else {
       return;

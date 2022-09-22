@@ -9,7 +9,6 @@ const SuggestedMentors = (props) => {
     let email = getEmail();
     getSuggested(props.type, email, 3)
       .then((res) => {
-        console.log("getSuggested res", res);
         setSuggested(res);
       })
       .catch((err) => {
