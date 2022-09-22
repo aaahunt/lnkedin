@@ -36,18 +36,19 @@ export const editUser = async (data) => {
   try {
     if (exceededQuota()) return `too many calls!`;
 
+    console.log("datain,", data)
+
     const docRef = doc(db, "users", data.email);
     const userID = data.email;
 
-    getDoc(docRef).then((res) => {
-      callCounter++;
-      let fullData = { ...res.data(), ...data };
+    let res = await getDoc(docRef);
+    callCounter++;
+    let fullData = { ...res.data(), ...data };
 
-      setDoc(doc(db, "users", userID), fullData).then((res) => {
-        callCounter++;
-        return "User profile () updated";
-      });
-    });
+    await setDoc(doc(db, "users", userID), fullData)
+    callCounter++;
+    return "User profile updated";
+
   } catch (err) {
     console.log(err);
     return "Error editing user";
@@ -172,7 +173,7 @@ export const getSuggested = async (type, email, n) => {
   let desiredSkills = userData.desiredSkills;
   let hobbies = userData.hobbies;
 
-  const table = (type === "Graduates") ? "users" : "mentors"
+  const table = type === "Graduates" ? "users" : "mentors";
 
   const q = query(collection(db, table));
 
@@ -180,11 +181,8 @@ export const getSuggested = async (type, email, n) => {
   querySnapshot.forEach((doc) => {
     let person = doc.data();
     let score;
-    if(type === "Graduates"){
-      score = stringSimilarity.compareTwoStrings(
-        person.hobbies,
-        hobbies
-      );
+    if (type === "Graduates") {
+      score = stringSimilarity.compareTwoStrings(person.hobbies, hobbies);
     } else {
       score = stringSimilarity.compareTwoStrings(
         person.currentSkills,
@@ -193,8 +191,7 @@ export const getSuggested = async (type, email, n) => {
     }
 
     person = { ...person, similarity: score };
-    if(person.email !== email)
-      suggested.push(person);
+    if (person.email !== email) suggested.push(person);
   });
 
   suggested.sort((a, b) => b.similarity - a.similarity);

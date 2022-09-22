@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import { editUser } from "../firebase/functions";
-import "../css/index.css";
+import React, { useState } from "react"
+import { editUser } from "../firebase/functions"
+import { getEmail } from "../functions/cookies"
+import "../css/index.css"
 
 function EditProfile(props) {
   
-  const [msg, setMsg] = useState();
+  const [msg, setMsg] = useState()
 
   async function submitButtonOn(event) {
-    event.preventDefault();
+    event.preventDefault()
+    let emailValue = getEmail()
+
     let data = {
-      email: event.target.elements.email.value,
+      email: emailValue,
       officeLocation: event.target.elements.officeLocation.value,
       role: event.target.elements.role.value,
       hobbies: event.target.elements.hobbies.value,
@@ -18,9 +21,9 @@ function EditProfile(props) {
       degree: event.target.elements.degree.value,
       bio: event.target.elements.bio.value,
       linkedin: event.target.elements.linkedin.value,
-    };
+    }
     editUser(data).then((res) => {
-      setMsg(res);
+      setMsg(res)
       console.log("response==", res)
     })
   }
@@ -84,4 +87,4 @@ function EditProfile(props) {
   )
 }
 
-export default EditProfile;
+export default EditProfile
