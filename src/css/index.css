@@ -39,7 +39,7 @@
   justify-content: center;
 }
 
-
+.logo h1{color: #000;}
 .logo {
   display: flex;
   justify-content: center;
@@ -55,7 +55,7 @@
 
 .nav-list a,
 .rightNav a {
-  text-decoration: underline;
+  text-decoration: none;
   color: white;
   font-size: 1.2rem;
 }
@@ -466,7 +466,7 @@ h3 {
   }
 
   .nav-list li {
-	padding: 26px 30px;
+	padding: 15px 20px;
   }
 
   .navbar {

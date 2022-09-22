@@ -12,6 +12,7 @@ const CryptoJS = require("crypto-js");
 var stringSimilarity = require("string-similarity");
 
 let cachedData = []
+let cacheType;
 
 let callCounter = 0;
 
@@ -136,11 +137,12 @@ export const checkLogin = async (email, pass) => {
 export const filterUser = async (search, dbCollection) => {
   let querySnapshot;
 
-  if(cachedData.length === 0){
+  if(cachedData.length === 0 || cacheType !== dbCollection){
     const q = query(collection(db, dbCollection));
     if (exceededQuota()) return "too many calls!";
     querySnapshot = await getDocs(q);
     cachedData = querySnapshot
+    cacheType = dbCollection
     callCounter++;
   } else {
     querySnapshot = cachedData

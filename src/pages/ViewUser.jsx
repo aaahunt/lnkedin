@@ -29,7 +29,7 @@ export default function ViewUser() {
   return (
     <div className="ViewUser">
       {user && (
-        <Card class="container">
+        <Card className="container">
           <CardContent className="flex-box">
             <div>
               <Typography variant="h5" component="div" align="left">
