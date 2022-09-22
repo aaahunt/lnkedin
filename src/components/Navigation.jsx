@@ -5,7 +5,9 @@ export default function Navigation() {
   return (
     <nav className="navbar background">
       <ul className="nav-list">
-        <div className="logo"></div>
+        <div className="logo">
+          <h1>RSG Bridge</h1>
+        </div>
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -17,7 +19,7 @@ export default function Navigation() {
         </li>
       </ul>
       <div className="rightNav">
-            <Link to="/profile">My Profile</Link>
+        <Link to="/profile">My Profile</Link>
       </div>
     </nav>
   );

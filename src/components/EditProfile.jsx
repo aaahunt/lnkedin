@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { editUser } from "../firebase/functions"
 import { getEmail } from "../functions/cookies"
-import "../css/index.css"
 
 function EditProfile(props) {
   

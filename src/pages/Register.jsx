@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { addUser } from "../firebase/functions";
 import { useNavigate } from "react-router";
+import { Row, Col, Container, Form, Button } from "react-bootstrap";
 const CryptoJS = require("crypto-js");
 
 export default function About() {
-  const [value, setValue] = useState("default");
   const [redirect, setRedirect] = useState(false);
 
   const navigate = useNavigate();
@@ -13,11 +13,7 @@ export default function About() {
     if (redirect) navigate("/login");
   }, [redirect, navigate]);
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  const submitUser = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // Stops page refresh
 
     let password = event.target.elements.password.value;
@@ -41,95 +37,147 @@ export default function About() {
       bio: event.target.elements.bio.value,
       linkedin: event.target.elements.linkedin.value,
     };
+    console.log("data2submit", data);
     addUser(data).then((res) => setRedirect(res));
   };
-
   return (
-    <div className="registrationapp">
-      <div className="login-form-registration">
-        <div className="title">Sign Up</div>
-        <div>
-          <form onSubmit={submitUser} id="registration">
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First name"
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last name"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-            />
-            <select
-              name="officeLocation"
-              defaultValue={value}
-              onChange={handleChange}
-            >
-              <option value="default" disabled hidden>
-                Location
-              </option>
-              <option value="Bishopsgate">Bishopsgate</option>
-              <option value="Sutton">Sutton</option>
-              <option value="Nottingham">Nottingham</option>
-              <option value="Leeds">Leeds</option>
-              <option value="Cardiff">Cardiff</option>
-              <option value="Southampton">Southampton</option>
-            </select>
-            <select name="role" defaultValue={value} onChange={handleChange}>
-              <option value="default" disabled hidden>
-                Role
-              </option>
-              <option value="UX">UX</option>
-              <option value="Tech">Tech</option>
-              <option value="Data Science">Data Science</option>
-              <option value="Product">Product</option>
-            </select>
-            <input type="text" name="degree" placeholder="Education" />
-            <textarea
-              rows="4"
-              name="bio"
-              placeholder="Enter a short bio (optional)..."
-            />
-            <input
-              type="text"
-              name="hobbies"
-              placeholder="Hobbies (comma separated)"
-            />
-            <input
-              type="text"
-              name="currentSkills"
-              placeholder="Skills (comma separated)"
-            />
-            <input
-              type="text"
-              name="desiredSkills"
-              placeholder="Desired Skills (comma separated)"
-            />
+    <Container className="mt-4">
+      <Row className="justify-content-md-center">
+        <Col>
+          <h1>Register</h1>
+          <p>Join RSG Bridge today, just fill in this form.</p>
+          <Form onSubmit={handleSubmit}>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="email" md="12" lg="6">
+                <Form.Label>Email *</Form.Label>
+                <Form.Control type="email" name="email" required />
+              </Form.Group>
 
-            <input
-              type="text"
-              name="linkedin"
-              placeholder="Enter your LinkedIn URL (optional)"
-            />
+              <Form.Group as={Col} controlId="password" md="12" lg="6">
+                <Form.Label>Password *</Form.Label>
+                <Form.Control type="password" name="password" required />
+              </Form.Group>
+            </Row>
 
-            <input type="submit" value="Create Account" />
-          </form>
-        </div>
-      </div>
-    </div>
+            <Row className="mb-3">
+              <Form.Group
+                as={Col}
+                className="mb-3"
+                controlId="firstName"
+                md="12"
+                lg="6"
+              >
+                <Form.Label>First Name *</Form.Label>
+                <Form.Control name="firstName" required />
+              </Form.Group>
+
+              <Form.Group
+                as={Col}
+                className="mb-3"
+                controlId="lastName"
+                md="12"
+                lg="6"
+              >
+                <Form.Label>Surname *</Form.Label>
+                <Form.Control name="lastName" required />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="officeLocation" md="12" lg="4">
+                <Form.Label>Location</Form.Label>
+                <Form.Select
+                  defaultValue="Select your location..."
+                  name="officeLocation"
+                  required
+                >
+                  <option value="Bishopsgate">Bishopsgate</option>
+                  <option value="Cardiff">Cardiff</option>
+                  <option value="Leeds">Leeds</option>
+                  <option value="Nottingham">Nottingham</option>
+                  <option value="Sutton">Sutton</option>
+                  <option value="Southampton">Southampton</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="role" md="12" lg="4">
+                <Form.Label>Role</Form.Label>
+                <Form.Select defaultValue="Choose your role..." name="role">
+                  <option value="Data Science">Data Science</option>
+                  <option value="Product">Product</option>
+                  <option value="Tech">Tech</option>
+                  <option value="UX">UX</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="degree" md="12" lg="4">
+                <Form.Label>
+                  Degree <span className="text-muted">(optional)</span>
+                </Form.Label>
+                <Form.Control type="text" name="degree" />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="hobbies" md="12" lg="4">
+                <Form.Label>
+                  Hobbies <span className="text-muted">(comma separated)</span>
+                </Form.Label>
+                <Form.Control type="text" name="hobbies" />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="skills" md="12" lg="4">
+                <Form.Label>
+                  Skills <span className="text-muted">(comma separated)</span>
+                </Form.Label>
+                <Form.Control type="text" name="currentSkills" />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="desiredSkills" md="12" lg="4">
+                <Form.Label>
+                  Desired Skills{" "}
+                  <span className="text-muted">(comma separated)</span>
+                </Form.Label>
+                <Form.Control type="text" name="desiredSkills" />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="bio" md="12" lg="8">
+                <Form.Label>
+                  Enter a short bio{" "}
+                  <span className="text-muted">(optional)</span>
+                </Form.Label>
+                <Form.Control as="textarea" rows={3} name="bio" />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group
+                as={Col}
+                className="mb-3"
+                controlId="linkedin"
+                md="12"
+                lg="6"
+              >
+                <Form.Label>
+                  Linked In Profile URL{" "}
+                  <span className="text-muted">(optional)</span>
+                </Form.Label>
+                <Form.Control name="linkedin" />
+              </Form.Group>
+            </Row>
+
+            <Button variant="primary" type="submit">
+              Register
+            </Button>
+
+            <Form.Group className="mt-5">
+              <a href="/Login">Back to login page</a>
+            </Form.Group>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }

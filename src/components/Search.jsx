@@ -7,16 +7,12 @@ export default function Search(props) {
     let search = e ? e.target.value : "";
 
     let dbCollection = String(props.db).toLowerCase();
-    console.log("dbCollection", dbCollection);
-
     dbCollection = dbCollection === "graduates" ? "users" : dbCollection;
 
     let returnValue = await filterUser(search, dbCollection);
-    if (!returnValue) {
-      console.log("No search criteria was given");
+    if (!returnValue)
       return;
-    }
-
+    
     props.callback(returnValue);
   };
   

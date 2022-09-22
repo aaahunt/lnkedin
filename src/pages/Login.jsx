@@ -1,70 +1,89 @@
 import React, { useEffect, useState } from "react";
-import "../css/index.css";
 import { checkLogin } from "../firebase/functions";
 import { setCookie } from "../functions/cookies";
+import { Row, Col, Container, Form, Button } from "react-bootstrap";
 
 function Login() {
-  const [errorMessage, setErrorMessage] = useState();
+  const [validated, setValidated] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    setCookie("user", "", -999) // clear logged in cookie
-  }, [])
-  
+    setCookie("user", "", -999); // clear logged in cookie
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      console.log("not valid?");
+      setValidated(false);
+    }
+
     let email = event.target.elements.email.value;
-    let pass = event.target.elements.pass.value;
+    let pass = event.target.elements.password.value;
 
     // Find user login info
     checkLogin(email, pass).then((userData) => {
       if (userData) {
+        setValidated(true);
         setCookie("user", userData.id, 3);
         window.location.replace("/home");
       } else {
-        // Username not found
-        setErrorMessage("Invalid email or password");
+        setValidated(false);
+        setError(true);
       }
     });
   };
 
-  // JSX code for login form
-  const renderForm = (
-    <div className="form">
-      <form onSubmit={handleSubmit}>
-        {errorMessage && <div className="error">{errorMessage}</div>}
-        <div className="input-container">
-          <label>Email </label>
-          <input type="text" name="email" required />
-        </div>
-        <div className="input-container">
-          <label>Password </label>
-          <input type="password" name="pass" required />
-        </div>
-        <div className="underline">
-          <li>
-            <a href="/Home">Forgot password?</a>
-          </li>
-        </div>
-        <div className="button-container">
-          <input value="Login" type="submit" />
-          <br></br>
-        </div>
-        <li>
-          <a href="/Register">Don't have an account? Sign up</a>
-        </li>
-      </form>
-    </div>
-  );
-
   return (
-    <div className="app">
-      <div className="login-form">
-        <div className="title">Login</div>
-        {renderForm}
-      </div>
-    </div>
+    <Container className="login justify-content-md-center">
+      <Row className="justify-content-md-center">
+        <Col md="auto">
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit}
+            className="pb-3"
+          >
+            <section className="logo">
+              <h1 className="mb-3">RSG Bridge</h1>
+            </section>
+            <h1 className="mb-3">Login</h1>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                name="email"
+                type="email"
+                placeholder="Enter email"
+                isInvalid={validated}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                name="password"
+                type="password"
+                placeholder="Password"
+                isInvalid={error}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                Incorrect username or password.
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <a href="/Register">Register now</a>
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Login
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

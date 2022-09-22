@@ -1,4 +1,3 @@
-import "../css/index.css"
 import EditProfile from "../components/EditProfile"
 import placeholderImage from "../img/placeholder.jpg"
 import React, { useState, useEffect } from "react"

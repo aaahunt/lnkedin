@@ -1,4 +1,3 @@
-import "../css/index.css";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { db } from "../firebase/init";

@@ -36,8 +36,6 @@ export const editUser = async (data) => {
   try {
     if (exceededQuota()) return `too many calls!`;
 
-    console.log("datain,", data)
-
     const docRef = doc(db, "users", data.email);
     const userID = data.email;
 
@@ -45,12 +43,10 @@ export const editUser = async (data) => {
     callCounter++;
     let fullData = { ...res.data(), ...data };
 
-    await setDoc(doc(db, "users", userID), fullData)
+    await setDoc(doc(db, "users", userID), fullData);
     callCounter++;
     return "User profile updated";
-
   } catch (err) {
-    console.log(err);
     return "Error editing user";
   }
 };
@@ -71,7 +67,6 @@ export const userExists = async (data) => {
 
     return found;
   } catch (error) {
-    console.log(error);
     return true;
   }
 };
@@ -86,9 +81,7 @@ export const getData = async (userID) => {
     let userInfo = docSnap.data();
     delete userInfo.password;
     return userInfo;
-  } else {
-    console.log("No such document!");
-  }
+  } else return false;
 };
 
 export const getAll = async () => {
@@ -116,20 +109,15 @@ export const checkLogin = async (email, pass) => {
   results.forEach((user) => {
     let dbEmail = user.data().email;
     let dbPass = user.data().password;
-    if (!dbPass) return;
+    if (!dbPass) return false;
     // Decrpyt password
     var bytes = CryptoJS.AES.decrypt(dbPass, "AIzaSyC4QmDmwTtyi0WQoLB");
     var decryptedPassword = bytes.toString(CryptoJS.enc.Utf8);
 
     if (email === dbEmail) {
-      if (pass === decryptedPassword) {
+      if (pass === decryptedPassword)
         returnValue = { ...user.data(), id: user.id };
-      } else {
-        console.log("pass is not the same", pass, decryptedPassword);
-      }
-    } else {
-      return;
-    }
+    } else return false;
   });
 
   return returnValue;

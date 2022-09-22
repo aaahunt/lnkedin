@@ -1,0 +1,23 @@
+#root{
+    min-height: 100vh;
+}
+form.login{
+    display: flex;
+    min-height: 100vh;
+    flex: 1;
+    align-items: center;
+}
+.login{
+    min-height: 100vh;
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+.btn-primary{
+    background-color: #37718e !important;
+}
+.logo{
+    text-align: center;
+    border-bottom: 3px solid;
+    margin-bottom: 3rem;
+}
