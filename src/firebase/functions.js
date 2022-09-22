@@ -162,6 +162,7 @@ export const filterUser = async (search, dbCollection) => {
 };
 
 function exceededQuota() {
+  console.log("function call #" + (callCounter + 1))
   return callCounter > 1000;
 }
 

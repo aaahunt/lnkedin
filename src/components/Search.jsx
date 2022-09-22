@@ -1,14 +1,23 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import { filterUser } from "../firebase/functions";
 
-export default function Search(props) {
+export default function Search({db, callback}) {
+
+  useEffect(() => {
+    let dbCollection = String(db).toLowerCase();
+    dbCollection = dbCollection === "graduates" ? "users" : dbCollection;
+
+    filterUser("", dbCollection).then(returnValue => {
+      callback(returnValue);
+    }).catch(() => console.log("error"))
+    
+  }, [db, callback])
+  
 
   const handleChange = async (e) => {
     let search = e ? e.target.value : "";
 
-    let dbCollection = String(props.db).toLowerCase();
-    console.log("dbCollection", dbCollection);
-
+    let dbCollection = String(db).toLowerCase();
     dbCollection = dbCollection === "graduates" ? "users" : dbCollection;
 
     let returnValue = await filterUser(search, dbCollection);
@@ -17,7 +26,7 @@ export default function Search(props) {
       return;
     }
 
-    props.callback(returnValue);
+    callback(returnValue);
   };
   
   return (

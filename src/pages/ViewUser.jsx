@@ -28,8 +28,9 @@ export default function ViewUser() {
 
   return (
     <div className="ViewUser">
+      {console.log("user", user)}
       {user && (
-        <Card sx={{ minWidth: 50 }}>
+        <Card class="container">
           <CardContent className="flex-box">
             <div>
               <Typography variant="h5" component="div" align="left">
@@ -68,15 +69,13 @@ export default function ViewUser() {
                   target="_blank"
                   rel="noopener noreferrer external"
                 >
-                  <div style={{ display: "flex", justifyContent: "right" }}>
                     <Button
-                      size="small"
                       color="primary"
-                      style={{ marginRight: "auto" }}
+                      id="view_profile"
+                      href={user.linkedin}
                     >
                       Linkedin
                     </Button>
-                  </div>
                 </a>
               </CardActions>
             </div>

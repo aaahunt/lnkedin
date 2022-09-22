@@ -35,7 +35,7 @@ function EditProfile(props) {
           <form onSubmit={submitButtonOn} id="registration">
 
             <label htmlFor="officeLocation">Location</label>
-            <select value={props.userData.officeLocation} name="officeLocation">
+            <select defaultValue={props.userData.officeLocation} name="officeLocation">
               <option value="Bishopsgate">Bishopsgate</option>
               <option value="Sutton">Sutton</option>
               <option value="Nottingham">Nottingham</option>
@@ -45,7 +45,7 @@ function EditProfile(props) {
             </select>
 
             <label htmlFor="role">Role</label>
-            <select value={props.userData.role} name="role">
+            <select defaultValue={props.userData.role} name="role">
               <option value="UX">UX</option>
               <option value="Tech">Tech</option>
               <option value="Data Science">Data Science</option>

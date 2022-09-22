@@ -7,6 +7,7 @@ import { Button, CardActions } from "@mui/material";
 import Search from "../components/Search";
 import { useLocation } from "react-router-dom";
 import Suggested from "../components/Suggested";
+import placeholderImage from "../img/placeholder.jpg"
 
 export default function Users(props) {
   const [data, setData] = useState([]);
@@ -16,7 +17,6 @@ export default function Users(props) {
     setData([]);
     let input = document.getElementById("searchField");
     if (input) input.value = "";
-
   }, [location]);
 
   return (
@@ -31,26 +31,37 @@ export default function Users(props) {
           {data.map((item) => (
             <div key={item.id}>
               <Card sx={{ minWidth: 275 }} className="card">
-                <CardContent>
-                  <Typography variant="h5" component="div" align="left">
-                    {item.firstName} {item.lastName}
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} align="left">
-                    Scheme: {item.role}
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} align="left">
-                    Office: {item.officeLocation}
-                  </Typography>
-                  <CardActions>
-                    <Button
-                      href={`/user?id=${item.id}&type=${props.db}`}
-                      size="small"
-                      color="primary"
-                      style={{ marginRight: "auto" }}
-                    >
-                      View Profile
-                    </Button>
-                  </CardActions>
+                <CardContent className="card-inner">
+                  <div className="image-details">
+                    <img
+                      src={placeholderImage}
+                      alt="Logo"
+                      id="placeholderImage"
+                    />
+                  </div>
+                  <div className="left-details">
+                    <Typography variant="h5" component="div" align="left">
+                      {item.firstName} {item.lastName}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} align="left">
+                      {item.role} {props.db.substring(0, props.db.length - 1)}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} align="left">
+                      {item.officeLocation}
+                    </Typography>
+                  </div>
+
+                  <div className="right-details">
+                    <CardActions>
+                      <Button
+                        href={`/user?id=${item.id}&type=${props.db}`}
+                        color="primary"
+                        id="view_profile"
+                      >
+                        View Profile
+                      </Button>
+                    </CardActions>
+                  </div>
                 </CardContent>
               </Card>
             </div>

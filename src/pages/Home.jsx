@@ -1,9 +1,11 @@
 import "../css/index.css";
 
+import { Button } from "@mui/material";
+
 function Home() {
   return (
     <div>
-      <section className="section">
+      <section className="section mh-50">
         <div className="box-main">
           <div className="firstHalf">
             <h1 className="text-big">
@@ -29,6 +31,9 @@ function Home() {
               <p className="text-small">
                 This is what you'll do on the Product Scheme!
               </p>
+              <Button color="primary" id="view_profile" href="#">
+                Read More
+              </Button>
             </div>
           </div>
         </section>
@@ -42,6 +47,9 @@ function Home() {
               <p className="text-small">
                 This is what you'll do on the UX Scheme!
               </p>
+              <Button color="primary" id="view_profile" href="#">
+                Read More
+              </Button>
             </div>
           </div>
         </section>
@@ -55,6 +63,9 @@ function Home() {
               <p className="text-small">
                 This is what you'll do on the UX Scheme!
               </p>
+              <Button color="primary" id="view_profile" href="#">
+                Read More
+              </Button>
             </div>
           </div>
         </section>
@@ -67,6 +78,9 @@ function Home() {
               <p className="text-small">
                 This is what you'll do on the Data Science Scheme!
               </p>
+              <Button color="primary" id="view_profile" href="#">
+                Read More
+              </Button>
             </div>
           </div>
         </section>

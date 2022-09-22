@@ -97,8 +97,12 @@
   justify-content: center;
 }
 
-.secondhalf {
-  width: 30%;
+.secondHalf {
+  text-align: center;
+}
+.secondHalf a{
+  margin: 20px 0;
+  padding: 9px 12px !important
 }
 
 .secondhalf img {
@@ -133,24 +137,39 @@
   padding: 6px 10px;
   vertical-align: middle;
 }
-
+.section.section {
+  flex: 1;
+}
 .section {
   display: flex;
+  flex-wrap: wrap;
   padding: 10px;
   align-items: center;
   justify-content: space-between;
   max-width: 1080px;
   margin: 0 auto;
 }
-section.cards {
+
+.right-details{
+  flex-grow:3;
+}
+.card-inner{
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
+}
+.mh-50{
+  min-height: 50vh;
+  background-color: #efefef;
 }
 .full {
   width: 100%;
 }
 .card {
   margin: 1rem;
+  border: 1px solid #bfbfbf !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 .section-Left {
   flex-direction: row-reverse;
@@ -258,6 +277,11 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
   background: grey;
+}
+
+.container{
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
 .button-container {
@@ -391,7 +415,33 @@ h3 {
 	margin: 5px;
   }
 
+  #view_profile{
+    background-color: #cc2a28;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 0;
+    color: white;
+  }
+
+
+  .right-details div{
+    justify-content: end;
+  }
+  @media only screen and (max-width: 500px) {
+    #placeholderImage {
+      max-width: 160px;
+  }
+  .card-inner div{
+    width: 100%;
+  }
+  .image-details, .card-inner div, .card-inner p{
+    text-align: center;
+    justify-content: center;
+  }
+}
+
 @media only screen and (min-width: 500px) {
+  
   .login-form-registration {
     width: 500px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
