@@ -116,6 +116,7 @@ export const checkLogin = async (email, pass) => {
 
   results.forEach((user) => {
     let dbEmail = user.data().email;
+    dbEmail = dbEmail.toLowerCase();
     let dbPass = user.data().password;
     if (!dbPass) return;
     // Decrpyt password

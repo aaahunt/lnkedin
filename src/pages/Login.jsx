@@ -15,6 +15,7 @@ function Login() {
     event.preventDefault();
 
     let email = event.target.elements.email.value;
+    email = email.toLowerCase();
     let pass = event.target.elements.pass.value;
 
     // Find user login info
